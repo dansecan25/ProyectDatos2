@@ -7,7 +7,8 @@
 MainScreen::MainScreen() {
     RenderWindow window(VideoMode(1000, 600), "Battle Space Project", sf::Style::Titlebar | sf::Style::Close);
     sf::Texture t;
-    t=ImageLoader::getInstance()->getTexture("../Resources/images/SpaceBackground.jpg");
+    //t=ImageLoader::getInstance()->getTexture("../Resources/images/SpaceBackground.jpg");
+    t.loadFromFile("../Resources/Images/SpaceBackground.jpg");
     sf::Sprite s(t);
     while (window.isOpen())
     {
