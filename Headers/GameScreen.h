@@ -4,9 +4,17 @@
 
 #ifndef PROYECTDATOS2_GAMESCREEN_H
 #define PROYECTDATOS2_GAMESCREEN_H
+#include "../Headers/WindowState.h"
 
+class GameScreen : public WindowState{
+private:
 
-class GameScreen {
+public:
+    GameScreen(sf::RenderWindow * window);
+    ~GameScreen();
+    void endState();
+    void gameUpdate(const float& dt);
+    void gameRender(sf::RenderTarget * target= nullptr);
 
 };
 

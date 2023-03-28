@@ -1,7 +1,8 @@
 #include <iostream>
 #include "Headers/MainScreen.h"
 int main() {
-    MainScreen screen = MainScreen();
+    MainScreen gameCreate;
+    gameCreate.run();
     return 0;
 }
 //g++ main.cpp -o projectBattleSpace.exe -lsfml-graphics -lsfml-window -lsfml-system

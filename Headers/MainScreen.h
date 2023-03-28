@@ -5,12 +5,32 @@
 #ifndef PROYECTDATOS2_MAINSCREEN_H
 #define PROYECTDATOS2_MAINSCREEN_H
 #include <SFML/Graphics.hpp>
+#include "../Headers/SfmlButton.h"
 #include "../ImageLoader.h"
+#include "../Headers/WindowState.h"
 //#include "../Resources/Images/SpaceBackground.jpg"
 using namespace sf;
 class MainScreen {
+private:
+    SfmlButton * gamestate_btn;
+    sf::RenderWindow * mainWindow; //will store the window
+    sf::Event sfEvent;
+
+    sf::Clock dtClock;
+    float dt;
+
+    void createWindow();
+    void initWindowState();
+
 public:
     MainScreen();
+    ~MainScreen();
+
+    void updateDt();
+    void update();
+    void render();
+    void updateEvents();
+    void run();
 };
 
 
