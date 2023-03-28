@@ -8,6 +8,7 @@
 #include "../Headers/SfmlButton.h"
 #include "../ImageLoader.h"
 #include "../Headers/WindowState.h"
+#include "../Headers/LInkedListFilesHeaders/windowStateStack.h"
 //#include "../Resources/Images/SpaceBackground.jpg"
 using namespace sf;
 class MainScreen {
@@ -18,7 +19,7 @@ private:
 
     sf::Clock dtClock;
     float dt;
-
+    windowStateStack* states;
     void createWindow();
     void initWindowState();
 

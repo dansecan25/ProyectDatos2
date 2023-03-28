@@ -22,9 +22,8 @@ MainScreen::~MainScreen() {
     delete this->gamestate_btn;
     delete this->mainWindow;
     //need stack
-//    while(!this->states.empty())
-//        delete this->states.top();
-//         this.pop()
+    while(!this->states->isEmpty())
+        this->states->pop(); //will go through every element from the stack and delete every one of them
 }
 /**
  * @brief initializes the main screen window
@@ -36,10 +35,9 @@ void MainScreen::createWindow() {
 
 void MainScreen::update() {
     this->updateEvents();
-    //uncomment when stack is created
-//    if(this->states.empty()){
-//        this->states.top()->update(this->dt);
-//    }
+    if(!this->states->isEmpty()){
+        this->states->peek()->update(this->dt); //peeks the top element of the stack
+    }
 }
 
 void MainScreen::render() {
@@ -48,10 +46,9 @@ void MainScreen::render() {
     t.loadFromFile("../Resources/Images/SpaceBackground.jpg");
     sf::Sprite s(t);
     this->mainWindow->clear();
-    //uncomment when stack is created
-//    if(this->states.empty()){
-//        this->states.top()->render(this->mainWindow);
-//    }
+    if(!this->states->isEmpty()){
+        this->states->peek()->render(this->mainWindow);
+    }
 
 
     this->mainWindow->draw(s);
@@ -86,6 +83,8 @@ void MainScreen::updateDt() {
 }
 
 void MainScreen::initWindowState() {
-    //this->states.push(new WindowState(this->mainWindow)); //this will add the state object to the stack
+    //check video, not working
+//    WindowState* winState=new WindowState(this->mainWindow);
+//    this->states->push(winState); //this will add the state object to the stack
 }
 
