@@ -5,9 +5,10 @@
 #include "../Headers/MainScreen.h"
 
 MainScreen::MainScreen() {
+    this->states=new gameStateStack();
     this->createWindow();
     this->initWindowState();
-    this->mainWindow->setFramerateLimit(60);
+
 //    this->gamestate_btn=new SfmlButton(100,100,150, 50, &sf::Font('Arial'), "Start Game",
 //                                       sf::Color(70,70,70,200),
 //                                       sf::Color(150,150,150,255),
@@ -19,7 +20,7 @@ MainScreen::MainScreen() {
  * @brief destructor for the class and releases the memory from the pointers
  */
 MainScreen::~MainScreen() {
-    delete this->gamestate_btn;
+    //delete this->gamestate_btn;
     delete this->mainWindow;
     //need stack
     while(!this->states->isEmpty())
@@ -36,7 +37,7 @@ void MainScreen::createWindow() {
 void MainScreen::update() {
     this->updateEvents();
     if(!this->states->isEmpty()){
-        this->states->peek()->update(this->dt); //peeks the top element of the stack
+        this->states->peek()->gameUpdate(this->dt); //peeks the top element of the stack
     }
 }
 
@@ -47,7 +48,7 @@ void MainScreen::render() {
     sf::Sprite s(t);
     this->mainWindow->clear();
     if(!this->states->isEmpty()){
-        this->states->peek()->render(this->mainWindow);
+        this->states->peek()->gameRender(this->mainWindow);
     }
 
 
@@ -77,14 +78,10 @@ void MainScreen::run() {
 
 void MainScreen::updateDt() {
     this->dt=this->dtClock.restart().asSeconds();
-
-    system("cls");
-    cout<<this->dt<<"\n";
 }
 
 void MainScreen::initWindowState() {
-    //check video, not working
-//    WindowState* winState=new WindowState(this->mainWindow);
-//    this->states->push(winState); //this will add the state object to the stack
+    this->states->push(new GameScreen(this->mainWindow));
+
 }
 

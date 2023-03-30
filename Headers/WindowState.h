@@ -14,11 +14,12 @@ private:
     std::vector<sf::Texture> textures;//change to a linked list
 
 public:
-    WindowState(sf::RenderTarget* window);
+    explicit WindowState(sf::RenderTarget* window);
     virtual ~WindowState();
     virtual void endState()=0;
-    virtual void update(const float& dt)=0;
-    virtual void render(sf::RenderTarget * target= nullptr)=0;
+
+    virtual void gameUpdate(const float& dt)=0;
+    virtual void gameRender(sf::RenderTarget * target)=0;
 
 };
 

@@ -2,26 +2,26 @@
 // Created by dansecan on 27/03/23.
 //
 
-#include "../../Headers/LInkedListFilesHeaders/windowStateStack.h"
+#include "../../Headers/LInkedListFilesHeaders/gameStateStack.h"
 /**
  * @brief constructor for the node of the stack
  */
-StackNodeStates::StackNodeStates(WindowState* dat) {
+StackNodeStates::StackNodeStates(GameScreen* dat) {
     this->data=dat;
-    this->link=NULL;
+    this->link=nullptr;
 }
 /**
  * @brief set the data of the node
  * @param dat WindowState pointer
  */
-void StackNodeStates::setData(WindowState *dat) {
+void StackNodeStates::setData(GameScreen *dat) {
     this->data=dat;
 }
 /**
  * @brief gets the WindowState pointer stored in the node
  * @return WindowState pointer
  */
-WindowState *StackNodeStates::getData() {
+GameScreen *StackNodeStates::getData() {
     return this->data;
 }
 /**
@@ -41,31 +41,33 @@ StackNodeStates *StackNodeStates::getLink() {
 /**
  * @brief stack constructor
  */
-windowStateStack::windowStateStack() {
-    top = NULL;
+gameStateStack::gameStateStack() {
+    top = nullptr;
+
 }
 /**
  * @brief pushes an object into the stack
  * @param data
  */
-void windowStateStack::push(WindowState* data){
-    StackNodeStates* temp = new StackNodeStates(data);
-
-    // Check if stack (heap) is full, if it is, crashes and reports an overflow
-    if (!temp) {
-        cout << "\nStack Overflow";
-        exit(1);
+void gameStateStack::push(GameScreen* data){
+    auto* temp = new StackNodeStates(data);
+    if(top== nullptr){
+        top=temp;
+        temp->setLink(nullptr);
+        temp->setData(data);
+    }else{
+        temp->setData(data);
+        temp->setLink(top);
+        top = temp;
     }
-    temp->setData(data);
-    temp->setLink(top);
-    top = temp;
+
 }
 
 /**
  * @brief checks if the stack is empty or not
  * @return true if empty or false if not
  */
-bool windowStateStack::isEmpty(){
+bool gameStateStack::isEmpty(){
     return top == nullptr;
 }
 
@@ -73,7 +75,7 @@ bool windowStateStack::isEmpty(){
  * @brief peeks the top element of the stack
  * @return WindowState pointer
  */
-WindowState* windowStateStack::peek(){
+GameScreen* gameStateStack::peek(){
     if (!isEmpty())
         return top->getData();
     else return nullptr;
@@ -82,10 +84,10 @@ WindowState* windowStateStack::peek(){
 /**
  * @brief delete the top element of the stack
  */
-void windowStateStack::pop(){
+void gameStateStack::pop(){
     StackNodeStates* temp;
 
-    if (top == NULL) {
+    if (top == nullptr) {
         cout << "\nStack Underflow" << endl;
     }
     else {
@@ -93,4 +95,14 @@ void windowStateStack::pop(){
         top = top->getLink();
         free(temp);//free the memory
     }
+}
+
+gameStateStack::~gameStateStack() {
+    while(this->top!=nullptr){
+        StackNodeStates* temp=this->top;
+        this->top=temp->getLink();
+        temp->setLink(nullptr);
+        free(temp);
+    }
+
 }

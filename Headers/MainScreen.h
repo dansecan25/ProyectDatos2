@@ -8,24 +8,25 @@
 #include "../Headers/SfmlButton.h"
 #include "../ImageLoader.h"
 #include "../Headers/WindowState.h"
-#include "../Headers/LInkedListFilesHeaders/windowStateStack.h"
+#include "../Headers/LInkedListFilesHeaders/gameStateStack.h"
+#include "../Headers/GameScreen.h"
 //#include "../Resources/Images/SpaceBackground.jpg"
 using namespace sf;
 class MainScreen {
 private:
-    SfmlButton * gamestate_btn;
+    //SfmlButton * gamestate_btn;
     sf::RenderWindow * mainWindow; //will store the window
     sf::Event sfEvent;
 
     sf::Clock dtClock;
     float dt;
-    windowStateStack* states;
+    gameStateStack* states;
     void createWindow();
     void initWindowState();
 
 public:
     MainScreen();
-    ~MainScreen();
+    virtual ~MainScreen();
 
     void updateDt();
     void update();

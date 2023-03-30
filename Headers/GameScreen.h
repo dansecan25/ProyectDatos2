@@ -6,15 +6,17 @@
 #define PROYECTDATOS2_GAMESCREEN_H
 #include "../Headers/WindowState.h"
 
-class GameScreen : public WindowState{
+class GameScreen
+        : public WindowState{
+
 private:
 
 public:
-    GameScreen(sf::RenderWindow * window);
-    ~GameScreen();
-    void endState();
-    void gameUpdate(const float& dt);
-    void gameRender(sf::RenderTarget * target= nullptr);
+    explicit GameScreen(sf::RenderWindow * window);
+    ~GameScreen() override;
+    void endState() override;
+    void gameUpdate(const float& dt) override;
+    void gameRender(sf::RenderTarget * target) override;
 
 };
 
