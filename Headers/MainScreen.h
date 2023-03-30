@@ -27,12 +27,13 @@ private:
 public:
     MainScreen();
     virtual ~MainScreen();
-
+    void run();
+    void endApp();
     void updateDt();
     void update();
     void render();
     void updateEvents();
-    void run();
+
 };
 
 

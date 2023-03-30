@@ -27,44 +27,6 @@ MainScreen::~MainScreen() {
         this->states->pop(); //will go through every element from the stack and delete every one of them
 }
 /**
- * @brief initializes the main screen window
- */
-void MainScreen::createWindow() {
-    this->mainWindow = new sf::RenderWindow(VideoMode(1000, 626), "Battle Space Project", sf::Style::Titlebar | sf::Style::Close);
-}
-
-
-void MainScreen::update() {
-    this->updateEvents();
-    if(!this->states->isEmpty()){
-        this->states->peek()->gameUpdate(this->dt); //peeks the top element of the stack
-    }
-}
-
-void MainScreen::render() {
-    sf::Texture t;
-    //t=ImageLoader::getInstance()->getTexture("../Resources/images/SpaceBackground.jpg");
-    t.loadFromFile("../Resources/Images/SpaceBackground.jpg");
-    sf::Sprite s(t);
-    this->mainWindow->clear();
-    if(!this->states->isEmpty()){
-        this->states->peek()->gameRender(this->mainWindow);
-    }
-
-
-    this->mainWindow->draw(s);
-    this->mainWindow->display();
-}
-
-void MainScreen::updateEvents() {
-    Event event{};
-    while (this->mainWindow->pollEvent(event))
-    {
-        if (event.type == Event::Closed)
-            this->mainWindow->close();
-    }
-}
-/**
  * @brief runs the window and executes the refresing of the screen
  */
 void MainScreen::run() {
@@ -75,13 +37,74 @@ void MainScreen::run() {
         this->render();
     }
 }
+void MainScreen::endApp() {
 
+    std::cout <<"Ending app<<"<<"\n";
+}
+/**
+ * @brief initializes the main screen window
+ */
+void MainScreen::createWindow() {
+    this->mainWindow = new sf::RenderWindow(VideoMode(1000, 626), "Battle Space Project", sf::Style::Titlebar | sf::Style::Close);
+    this->mainWindow->setFramerateLimit(60);
+}
+/**
+ * @brief updates the timer of execution, show the time every time its called
+ */
 void MainScreen::updateDt() {
     this->dt=this->dtClock.restart().asSeconds();
 }
+/**
+ * @brief updates the elements of the game window
+ */
+void MainScreen::update() {
+    this->updateEvents();
+    if(!this->states->isEmpty()){
+        this->states->peek()->gameUpdate(this->dt); //peeks the top element of the stack
+        if(this->states->peek()->getQuit()){
+            //here goes something if the game is quitted, if return to mainscren
+            this->states->peek()->endState();
+            this->states->pop(); //pop instantly frees the memory stored in the current top
+        }
+    }else{
+        this->endApp();
+        this->mainWindow->close(); //ends the app
+    }
+}
+/**
+ * @brief renders the images and objects into the window
+ */
+void MainScreen::render() {
+    sf::Texture backgroundTexture;
+    //t=ImageLoader::getInstance()->getTexture("../Resources/images/SpaceBackground.jpg");
+    backgroundTexture.loadFromFile("../Resources/Images/SpaceBackground.jpg");
+    sf::Sprite backgroundSprite(backgroundTexture);
+    this->mainWindow->clear();
+    if(!this->states->isEmpty()){ //checks if the stack is not empty
+        this->states->peek()->gameRender(this->mainWindow);
+    }
+    this->mainWindow->draw(backgroundSprite);
+    this->mainWindow->display();
+}
+/**
+ * @brief
+ */
+void MainScreen::updateEvents() {
+    Event event{};
+    while (this->mainWindow->pollEvent(event))
+    {
+        if (event.type == Event::Closed)
+            this->mainWindow->close();
+    }
+}
+
+
+
 
 void MainScreen::initWindowState() {
     this->states->push(new GameScreen(this->mainWindow));
 
 }
+
+
 

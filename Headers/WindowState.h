@@ -12,14 +12,17 @@ private:
 
     sf::RenderTarget* window;
     std::vector<sf::Texture> textures;//change to a linked list
+    bool quit;
 
 public:
     explicit WindowState(sf::RenderTarget* window);
     virtual ~WindowState();
-    virtual void endState()=0;
-
+    [[nodiscard]] const bool& getQuit() const;
+    virtual void updateKeybinds(const float& dt)=0;
+    virtual void checkForQuit();
     virtual void gameUpdate(const float& dt)=0;
     virtual void gameRender(sf::RenderTarget * target)=0;
+    virtual void endState()=0;
 
 };
 

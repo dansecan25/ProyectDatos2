@@ -11,3 +11,15 @@ WindowState::WindowState(sf::RenderTarget* window) {
 WindowState::~WindowState() {
 
 }
+/**
+ * @brief checks if the escape key is pressed to set the boolean as true
+ */
+void WindowState::checkForQuit() {
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){ //when escape key is pressed, game closes
+        this->quit=true;
+    }
+}
+
+const bool &WindowState::getQuit() const {
+    return this->quit;
+}
