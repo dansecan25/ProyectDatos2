@@ -29,7 +29,7 @@ public:
     void push(GameScreen* dat);
     GameScreen* peek();
     void pop();
-    bool isEmpty();
+    bool isEmpty() const;
     StackNodeStates* top;
 
 private:

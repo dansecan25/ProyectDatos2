@@ -9,16 +9,15 @@
 using namespace std;
 class GameScreen
         : public WindowState{
-
 private:
-
+    Entities player;
 public:
     explicit GameScreen(sf::RenderWindow * window);
     ~GameScreen() override;
     void endState()override;
-    void updateKeybinds(const float& dt) override;
-    void gameUpdate(const float& dt) override;
-    void gameRender(sf::RenderTarget * target) override;
+    void updateInput(const float& dt) override;
+    void stateUpdate(const float& dt) override;
+    void stateRender(sf::RenderTarget * target) override;
 
 };
 

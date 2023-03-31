@@ -14,16 +14,26 @@ GameScreen::~GameScreen() {
 void GameScreen::endState() {
     cout<<"Goodbye suckers!"<<endl;
 }
-void GameScreen::updateKeybinds(const float &dt) {
+void GameScreen::updateInput(const float &dt) {
     this->checkForQuit();
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+        this->player.move(dt, 0,-2);
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+        this->player.move(dt, 0,2);
+    }
 }
-void GameScreen::gameUpdate(const float& dt) {
-    this->updateKeybinds(dt);
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-        std::cout<<"A"<<"\n";
+void GameScreen::stateUpdate(const float& dt) {
+    this->updateInput(dt);
+    this->player.updateEntity(dt);
 }
 
-void GameScreen::gameRender(sf::RenderTarget * target) {
+void GameScreen::stateRender(sf::RenderTarget * target) {
+    if(!target){
+        target=this->window;
+    }
+    this->player.renderEntity(this->window);
+
 
 }
 

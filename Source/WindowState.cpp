@@ -6,6 +6,7 @@
 
 WindowState::WindowState(sf::RenderTarget* window) {
     this->window=window;
+    this->quit=false;
 }
 
 WindowState::~WindowState() {

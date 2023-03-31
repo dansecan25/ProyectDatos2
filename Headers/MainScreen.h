@@ -4,13 +4,12 @@
 
 #ifndef PROYECTDATOS2_MAINSCREEN_H
 #define PROYECTDATOS2_MAINSCREEN_H
-#include <SFML/Graphics.hpp>
 #include "../Headers/SfmlButton.h"
 #include "../ImageLoader.h"
-#include "../Headers/WindowState.h"
 #include "../Headers/LInkedListFilesHeaders/gameStateStack.h"
 #include "../Headers/GameScreen.h"
-//#include "../Resources/Images/SpaceBackground.jpg"
+#include "../Headers/LInkedListFilesHeaders/LinkedListStructured.h"
+
 using namespace sf;
 class MainScreen {
 private:
@@ -21,8 +20,10 @@ private:
     sf::Clock dtClock;
     float dt;
     gameStateStack* states;
+    LinkedListStructured* supportedKeys;
     void createWindow();
     void initWindowState();
+    void initKeys();
 
 public:
     MainScreen();

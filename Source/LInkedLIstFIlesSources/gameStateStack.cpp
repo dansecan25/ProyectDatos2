@@ -51,15 +51,10 @@ gameStateStack::gameStateStack() {
  */
 void gameStateStack::push(GameScreen* data){
     auto* temp = new StackNodeStates(data);
-    if(top== nullptr){
-        top=temp;
-        temp->setLink(nullptr);
-        temp->setData(data);
-    }else{
-        temp->setData(data);
-        temp->setLink(top);
-        top = temp;
-    }
+    temp->setData(data);
+    temp->setLink(top);
+    top = temp;
+
 
 }
 
@@ -67,7 +62,7 @@ void gameStateStack::push(GameScreen* data){
  * @brief checks if the stack is empty or not
  * @return true if empty or false if not
  */
-bool gameStateStack::isEmpty(){
+bool gameStateStack::isEmpty() const{
     return top == nullptr;
 }
 
@@ -96,7 +91,9 @@ void gameStateStack::pop(){
         free(temp);//free the memory
     }
 }
-
+/**
+ * @brief destructor for the stack
+ */
 gameStateStack::~gameStateStack() {
     while(this->top!=nullptr){
         StackNodeStates* temp=this->top;

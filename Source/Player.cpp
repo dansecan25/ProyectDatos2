@@ -3,3 +3,11 @@
 //
 
 #include "../Headers/Player.h"
+
+Player::Player() {
+
+}
+
+Player::~Player() {
+
+}

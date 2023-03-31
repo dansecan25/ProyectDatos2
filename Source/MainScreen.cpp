@@ -6,8 +6,15 @@
 
 MainScreen::MainScreen() {
     this->states=new gameStateStack();
+    this->supportedKeys=new LinkedListStructured();
+//    this->supportedKeys->insertNode("Try1",99);
+//    this->supportedKeys->insertNode("Try2",98);
+//    cout<<this->supportedKeys->getNode("Try1")<<endl;
+//    cout<<this->supportedKeys->getNode("Try2")<<endl;
     this->createWindow();
     this->initWindowState();
+    this->initKeys();
+
 
 //    this->gamestate_btn=new SfmlButton(100,100,150, 50, &sf::Font('Arial'), "Start Game",
 //                                       sf::Color(70,70,70,200),
@@ -25,6 +32,11 @@ MainScreen::~MainScreen() {
     //need stack
     while(!this->states->isEmpty())
         this->states->pop(); //will go through every element from the stack and delete every one of them
+    delete this->states;
+    while(this->supportedKeys->getLen()>0){
+        this->supportedKeys->deleteLast();
+    }
+    delete this->supportedKeys;
 }
 /**
  * @brief runs the window and executes the refresing of the screen
@@ -38,8 +50,7 @@ void MainScreen::run() {
     }
 }
 void MainScreen::endApp() {
-
-    std::cout <<"Ending app<<"<<"\n";
+    std::cout <<"Ending app"<<"\n";
 }
 /**
  * @brief initializes the main screen window
@@ -59,8 +70,9 @@ void MainScreen::updateDt() {
  */
 void MainScreen::update() {
     this->updateEvents();
+
     if(!this->states->isEmpty()){
-        this->states->peek()->gameUpdate(this->dt); //peeks the top element of the stack
+        this->states->peek()->stateUpdate(this->dt); //peeks the top element of the stack
         if(this->states->peek()->getQuit()){
             //here goes something if the game is quitted, if return to mainscren
             this->states->peek()->endState();
@@ -76,18 +88,19 @@ void MainScreen::update() {
  */
 void MainScreen::render() {
     sf::Texture backgroundTexture;
-    //t=ImageLoader::getInstance()->getTexture("../Resources/images/SpaceBackground.jpg");
     backgroundTexture.loadFromFile("../Resources/Images/SpaceBackground.jpg");
     sf::Sprite backgroundSprite(backgroundTexture);
+
     this->mainWindow->clear();
-    if(!this->states->isEmpty()){ //checks if the stack is not empty
-        this->states->peek()->gameRender(this->mainWindow);
-    }
     this->mainWindow->draw(backgroundSprite);
+    if(!this->states->isEmpty()){ //checks if the stack is not empty
+        this->states->peek()->stateRender(this->mainWindow);
+    }
+
     this->mainWindow->display();
 }
 /**
- * @brief
+ * @brief updates the events on the game
  */
 void MainScreen::updateEvents() {
     Event event{};
@@ -97,12 +110,18 @@ void MainScreen::updateEvents() {
             this->mainWindow->close();
     }
 }
-
-
-
-
+/**
+ * @brief pushes a GameScreen object into the stack
+ */
 void MainScreen::initWindowState() {
     this->states->push(new GameScreen(this->mainWindow));
+
+}
+
+void MainScreen::initKeys() {
+    this->supportedKeys->insertNode("W",sf::Keyboard::Key::W);
+    this->supportedKeys->insertNode("S",sf::Keyboard::Key::S);
+    cout<<this->supportedKeys->getNode("W")<<endl;
 
 }
 
