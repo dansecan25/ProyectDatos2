@@ -1,129 +1,98 @@
 //
-// Created by dansecan on 11/03/23.
+// Created by dansecan on 06/04/23.
 //
 
 #include "../Headers/MainScreen.h"
 
-MainScreen::MainScreen() {
-    this->states=new gameStateStack();
-    this->supportedKeys=new LinkedListStructured();
-//    this->supportedKeys->insertNode("Try1",99);
-//    this->supportedKeys->insertNode("Try2",98);
-//    cout<<this->supportedKeys->getNode("Try1")<<endl;
-//    cout<<this->supportedKeys->getNode("Try2")<<endl;
-    this->createWindow();
-    this->initWindowState();
-    this->initKeys();
-
-
-//    this->gamestate_btn=new SfmlButton(100,100,150, 50, &sf::Font('Arial'), "Start Game",
-//                                       sf::Color(70,70,70,200),
-//                                       sf::Color(150,150,150,255),
-//                                       sf::Color(20,20,20,200));
-
+MainScreen::MainScreen(sf::RenderWindow* window, LinkedListStructured* supportedKeys,gameStateStack* states)
+: WindowState(window,supportedKeys,states){
+    this->initFonts();
+    this->initKeybinds();
+    this->initButtons();
 
 }
-/**
- * @brief destructor for the class and releases the memory from the pointers
- */
+
 MainScreen::~MainScreen() {
-    //delete this->gamestate_btn;
-    delete this->mainWindow;
-    //need stack
-    while(!this->states->isEmpty())
-        this->states->pop(); //will go through every element from the stack and delete every one of them
-    delete this->states;
-    while(this->supportedKeys->getLen()>0){
-        this->supportedKeys->deleteLast();
-    }
-    delete this->supportedKeys;
+    delete this->startButton;
+    delete this->exitButton;
+}
+
+void MainScreen::endState() {
+    cout<<"Ending app"<<endl;
 }
 /**
- * @brief runs the window and executes the refresing of the screen
+ * @brief updates the event keys pressed actions when input happens
+ * @param dt int time
  */
-void MainScreen::run() {
-    while (this->mainWindow->isOpen()) //
+void MainScreen::updateInput(const float &dt) {
+    this->checkForQuit();
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::G)){
+
+    }
+}
+void MainScreen::initKeybinds() {
+    this->keyBinds->insertNode("Move_Up",this->supportedKeys->getNode("W"));
+    this->keyBinds->insertNode("Move_Down",this->supportedKeys->getNode("S"));
+    this->keyBinds->insertNode("Quit",this->supportedKeys->getNode("Escape"));
+}
+
+void MainScreen::stateUpdate(const float &dt) {
+    this->updateMousePosScreen();
+    this->updateInput(dt);
+
+    this->updateButtons();
+
+}
+
+void MainScreen::stateRender(sf::RenderTarget *target) {
+    if(!target){
+        target=this->window;
+    }
+    this->renderButtons(target);
+}
+/**
+ * @brief loads the font to the font attribute
+ */
+void MainScreen::initFonts() {
+    if (!this->font.loadFromFile("../Resources/Fonts/arial.ttf"))
     {
-        this->updateDt();
-        this->update();
-        this->render();
-    }
-}
-void MainScreen::endApp() {
-    std::cout <<"Ending app"<<"\n";
-}
-/**
- * @brief initializes the main screen window
- */
-void MainScreen::createWindow() {
-    this->mainWindow = new sf::RenderWindow(VideoMode(1000, 626), "Battle Space Project", sf::Style::Titlebar | sf::Style::Close);
-    this->mainWindow->setFramerateLimit(60);
-}
-/**
- * @brief updates the timer of execution, show the time every time its called
- */
-void MainScreen::updateDt() {
-    this->dt=this->dtClock.restart().asSeconds();
-}
-/**
- * @brief updates the elements of the game window
- */
-void MainScreen::update() {
-    this->updateEvents();
-
-    if(!this->states->isEmpty()){
-        this->states->peek()->stateUpdate(this->dt); //peeks the top element of the stack
-        if(this->states->peek()->getQuit()){
-            //here goes something if the game is quitted, if return to mainscren
-            this->states->peek()->endState();
-            this->states->pop(); //pop instantly frees the memory stored in the current top
-        }
-    }else{
-        this->endApp();
-        this->mainWindow->close(); //ends the app
-    }
-}
-/**
- * @brief renders the images and objects into the window
- */
-void MainScreen::render() {
-    sf::Texture backgroundTexture;
-    backgroundTexture.loadFromFile("../Resources/Images/SpaceBackground.jpg");
-    sf::Sprite backgroundSprite(backgroundTexture);
-
-    this->mainWindow->clear();
-    this->mainWindow->draw(backgroundSprite);
-    if(!this->states->isEmpty()){ //checks if the stack is not empty
-        this->states->peek()->stateRender(this->mainWindow);
+        exit(200);
     }
 
-    this->mainWindow->display();
 }
-/**
- * @brief updates the events on the game
- */
-void MainScreen::updateEvents() {
-    Event event{};
-    while (this->mainWindow->pollEvent(event))
-    {
-        if (event.type == Event::Closed)
-            this->mainWindow->close();
+
+void MainScreen::initButtons() {
+    this->startButton=new SfmlButton(450, 400, 200, 75, &font, "Start Game",
+                                     sf::Color(70,70,70,200),
+                                     sf::Color(150,150,150,255),
+                                     sf::Color(20,20,20,200));
+    this->exitButton=new SfmlButton(50, 50, 75, 40, &font, "Exit",
+                                     sf::Color(70,70,70,200),
+                                     sf::Color(150,150,150,255),
+                                     sf::Color(20,20,20,200));
+
+}
+
+void MainScreen::updateButtons() {
+    this->startButton->update(this->positions.posXf, this->positions.posYf);
+    //here goes when start button is pressed
+    if(this->startButton->isPressed()){
+        this->states->push(new GameScreen(this->window,this->supportedKeys,this->states));
     }
-}
-/**
- * @brief pushes a GameScreen object into the stack
- */
-void MainScreen::initWindowState() {
-    this->states->push(new GameScreen(this->mainWindow));
+    this->exitButton->update(this->positions.posXf, this->positions.posYf);
+    if(this->exitButton->isPressed()){
+        this->quit=true;
+    }
 
-}
 
-void MainScreen::initKeys() {
-    this->supportedKeys->insertNode("W",sf::Keyboard::Key::W);
-    this->supportedKeys->insertNode("S",sf::Keyboard::Key::S);
-    cout<<this->supportedKeys->getNode("W")<<endl;
 
 }
 
+void MainScreen::renderButtons(sf::RenderTarget *target) {
+    this->startButton->render(target);
+    this->exitButton->render(target);
 
 
+
+
+}

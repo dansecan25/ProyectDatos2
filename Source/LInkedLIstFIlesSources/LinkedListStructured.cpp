@@ -128,16 +128,19 @@ int LinkedListStructured::getNode(std::string key) {
 void LinkedListStructured::deleteNode(std::string key) {
     structuresNode * temp1=head,*temp2= head;
     if(len==0) {
+        len=0;
         return;
     }else if(temp1->getCharacter()==key){//if the key is in the head
         head=head->getNext();
         delete temp1;
+        len--;
         return;
     }else{
         for(int i=0; i<len;i++){
             if(temp1->getCharacter()==key){
                 temp2->setNext(temp1->getNext());
                 delete temp1;
+                len--;
                 break;
             }else{
                 temp2=temp1;
@@ -160,10 +163,12 @@ int LinkedListStructured::getLen() {
 void LinkedListStructured::deleteLast() {
     structuresNode * temp1=head;
     if(len==0) {
+        len=0;
         return;
     }else if(len==1){
         head=nullptr;
         delete temp1;
+        len--;
     }else{
         while(temp1!= nullptr){
             structuresNode* nextTemp=temp1->getNext();
@@ -171,6 +176,7 @@ void LinkedListStructured::deleteLast() {
                 temp1->setNext(nextTemp->getNext());
                 nextTemp->setNext(nullptr);
                 delete nextTemp;
+                len--;
                 return;
             }
             temp1=nextTemp;

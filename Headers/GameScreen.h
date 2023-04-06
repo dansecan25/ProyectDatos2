@@ -11,8 +11,10 @@ class GameScreen
         : public WindowState{
 private:
     Entities player;
+
+    void initKeybinds() override;
 public:
-    explicit GameScreen(sf::RenderWindow * window);
+    explicit GameScreen(sf::RenderWindow * window,LinkedListStructured* mapStructures,gameStateStack* states);
     ~GameScreen() override;
     void endState()override;
     void updateInput(const float& dt) override;

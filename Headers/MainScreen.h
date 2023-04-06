@@ -1,40 +1,33 @@
 //
-// Created by dansecan on 11/03/23.
+// Created by dansecan on 06/04/23.
 //
 
 #ifndef PROYECTDATOS2_MAINSCREEN_H
 #define PROYECTDATOS2_MAINSCREEN_H
+#include "../Headers/WindowState.h"
 #include "../Headers/SfmlButton.h"
-#include "../ImageLoader.h"
-#include "../Headers/LInkedListFilesHeaders/gameStateStack.h"
 #include "../Headers/GameScreen.h"
-#include "../Headers/LInkedListFilesHeaders/LinkedListStructured.h"
-
-using namespace sf;
-class MainScreen {
-private:
-    //SfmlButton * gamestate_btn;
-    sf::RenderWindow * mainWindow; //will store the window
-    sf::Event sfEvent;
-
-    sf::Clock dtClock;
-    float dt;
-    gameStateStack* states;
-    LinkedListStructured* supportedKeys;
-    void createWindow();
-    void initWindowState();
-    void initKeys();
-
+using namespace std;
+class MainScreen
+        :public WindowState{
 public:
-    MainScreen();
+    MainScreen(sf::RenderWindow* window, LinkedListStructured* supportedKeys,gameStateStack* states);
     virtual ~MainScreen();
-    void run();
-    void endApp();
-    void updateDt();
-    void update();
-    void render();
-    void updateEvents();
+    SfmlButton * startButton;
+    SfmlButton * exitButton;
 
+    void endState();
+    void updateInput(const float& dt);
+    void updateButtons();
+    void renderButtons(sf::RenderTarget * target);
+    void stateUpdate(const float& dt) override;
+    void stateRender(sf::RenderTarget * target) override;
+private:
+    sf::RectangleShape backGround;
+    sf::Font font;
+    void initFonts();
+    void initButtons();
+    virtual void initKeybinds() override;
 };
 
 

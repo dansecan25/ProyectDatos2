@@ -1,7 +1,7 @@
 #include <iostream>
-#include "Headers/MainScreen.h"
+#include "Headers/ApplicationManager.h"
 int main() {
-    MainScreen gameCreate;
+    ApplicationManager gameCreate;
     gameCreate.run();
     return 0;
 }

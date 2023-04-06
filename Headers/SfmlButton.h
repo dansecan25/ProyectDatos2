@@ -6,7 +6,6 @@
 #define PROYECTDATOS2_SFMLBUTTON_H
 #include <SFML/Graphics.hpp>
 enum buttonStates{BTNidle=0,BTNhover,BTNpressed};
-
 class SfmlButton {
 
 private:
@@ -25,7 +24,7 @@ public:
                sf::Color idleC, sf::Color hoverC, sf::Color activeC);
     ~SfmlButton();
     const bool isPressed() const;
-    void update(const sf::Vector2f mousePos);
+    void update(float posX, float posY);
     void render(sf::RenderTarget* target);
 
 

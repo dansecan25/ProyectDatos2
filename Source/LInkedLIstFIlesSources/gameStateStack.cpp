@@ -3,10 +3,11 @@
 //
 
 #include "../../Headers/LInkedListFilesHeaders/gameStateStack.h"
+#include "../../Headers/WindowState.h"
 /**
  * @brief constructor for the node of the stack
  */
-StackNodeStates::StackNodeStates(GameScreen* dat) {
+StackNodeStates::StackNodeStates(WindowState* dat) {
     this->data=dat;
     this->link=nullptr;
 }
@@ -14,14 +15,14 @@ StackNodeStates::StackNodeStates(GameScreen* dat) {
  * @brief set the data of the node
  * @param dat WindowState pointer
  */
-void StackNodeStates::setData(GameScreen *dat) {
+void StackNodeStates::setData(WindowState *dat) {
     this->data=dat;
 }
 /**
  * @brief gets the WindowState pointer stored in the node
  * @return WindowState pointer
  */
-GameScreen *StackNodeStates::getData() {
+WindowState *StackNodeStates::getData() {
     return this->data;
 }
 /**
@@ -49,7 +50,7 @@ gameStateStack::gameStateStack() {
  * @brief pushes an object into the stack
  * @param data
  */
-void gameStateStack::push(GameScreen* data){
+void gameStateStack::push(WindowState* data){
     auto* temp = new StackNodeStates(data);
     temp->setData(data);
     temp->setLink(top);
@@ -70,7 +71,7 @@ bool gameStateStack::isEmpty() const{
  * @brief peeks the top element of the stack
  * @return WindowState pointer
  */
-GameScreen* gameStateStack::peek(){
+WindowState* gameStateStack::peek(){
     if (!isEmpty())
         return top->getData();
     else return nullptr;
@@ -83,7 +84,7 @@ void gameStateStack::pop(){
     StackNodeStates* temp;
 
     if (top == nullptr) {
-        cout << "\nStack Underflow" << endl;
+        std::cout << "\nStack Underflow" << std::endl;
     }
     else {
         temp = top;

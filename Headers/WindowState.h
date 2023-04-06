@@ -5,15 +5,28 @@
 #ifndef PROYECTDATOS2_WINDOWSTATE_H
 #define PROYECTDATOS2_WINDOWSTATE_H
 #include "../Headers/Entities.h"
-
+#include "../Headers/LInkedListFilesHeaders/LinkedListStructured.h"
+#include "../Headers/LInkedListFilesHeaders/gameStateStack.h"
+struct mousePositions{
+    int posXi;
+    int posYi;
+    unsigned int posXu;
+    unsigned int posYu;
+    float posXf;
+    float posYf;
+};
 class WindowState {
 protected:
-    sf::RenderTarget* window;
+    gameStateStack* states;
+    mousePositions positions{};
+    sf::RenderWindow* window;
+    LinkedListStructured* supportedKeys;
+    LinkedListStructured* keyBinds;
     std::vector<sf::Texture> textures;//change to a linked list
     bool quit;
-
+    virtual void initKeybinds()=0;
 public:
-    explicit WindowState(sf::RenderTarget* window);
+    WindowState(sf::RenderWindow* window, LinkedListStructured* mapStructures,gameStateStack* states);
     virtual ~WindowState();
     [[nodiscard]] const bool& getQuit() const;
     virtual void updateInput(const float& dt)=0;
@@ -21,6 +34,7 @@ public:
     virtual void stateUpdate(const float& dt)=0;
     virtual void stateRender(sf::RenderTarget * target)=0;
     virtual void endState()=0;
+    void updateMousePosScreen();
 
 };
 
