@@ -8,6 +8,7 @@ GameScreen::GameScreen(sf::RenderWindow* window,LinkedListStructured* mapStructu
 :WindowState(window, mapStructures,states){
     this->initKeybinds();
 
+
 }
 
 GameScreen::~GameScreen() {
@@ -16,6 +17,7 @@ GameScreen::~GameScreen() {
 void GameScreen::endState() {
     cout<<"Goodbye suckers!"<<endl;
 }
+
 void GameScreen::updateInput(const float &dt) {
     this->checkForQuit();
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("Move_Up")))){
@@ -36,8 +38,6 @@ void GameScreen::stateRender(sf::RenderTarget * target) {
         target=this->window;
     }
     this->player.renderEntity(this->window);
-
-
 }
 
 void GameScreen::initKeybinds() {
@@ -45,7 +45,5 @@ void GameScreen::initKeybinds() {
     this->keyBinds->insertNode("Move_Down",this->supportedKeys->getNode("S"));
     this->keyBinds->insertNode("Quit",this->supportedKeys->getNode("Escape"));
 }
-
-
 
 
