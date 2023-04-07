@@ -45,8 +45,12 @@ void ApplicationManager::endApp() {
  * @brief initializes the main screen window
  */
 void ApplicationManager::createWindow() {
-    this->mainWindow = new sf::RenderWindow(VideoMode(1000, 626), "Battle Space Project", sf::Style::Titlebar | sf::Style::Close);
+    sf::ContextSettings windowSettings;
+    windowSettings.antialiasingLevel=0;
+    this->mainWindow = new sf::RenderWindow(VideoMode(1000, 626), "Battle Space Project", sf::Style::Titlebar | sf::Style::Close,windowSettings);
     this->mainWindow->setFramerateLimit(60);
+    this->mainWindow->setVerticalSyncEnabled(false);
+
 }
 /**
  * @brief updates the timer of execution, show the time every time its called
