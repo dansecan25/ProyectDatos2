@@ -3,6 +3,7 @@
 //
 
 #include "../Headers/MainScreen.h"
+#include "../Headers/GameModeScreen.h"
 
 MainScreen::MainScreen(sf::RenderWindow* window, LinkedListStructured* supportedKeys,gameStateStack* states)
 : WindowState(window,supportedKeys,states){
@@ -77,7 +78,7 @@ void MainScreen::updateButtons() {
     this->startButton->update(this->positions.posXf, this->positions.posYf);
     //here goes when start button is pressed
     if(this->startButton->isPressed()){
-        this->states->push(new GameScreen(this->window,this->supportedKeys,this->states));
+        this->states->push(new GameModeScreen(this->window,this->supportedKeys,this->states));
     }
     this->exitButton->update(this->positions.posXf, this->positions.posYf);
     if(this->exitButton->isPressed()){

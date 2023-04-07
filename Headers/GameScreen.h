@@ -5,6 +5,7 @@
 #ifndef PROYECTDATOS2_GAMESCREEN_H
 #define PROYECTDATOS2_GAMESCREEN_H
 #include "../Headers/WindowState.h"
+#include "SfmlButton.h"
 #include <iostream>
 using namespace std;
 class GameScreen
@@ -20,7 +21,6 @@ public:
     void updateInput(const float& dt) override;
     void stateUpdate(const float& dt) override;
     void stateRender(sf::RenderTarget * target) override;
-
 };
 
 

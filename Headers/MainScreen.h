@@ -7,6 +7,8 @@
 #include "../Headers/WindowState.h"
 #include "../Headers/SfmlButton.h"
 #include "../Headers/GameScreen.h"
+#include "../Headers/GameModeScreen.h"
+
 using namespace std;
 class MainScreen
         :public WindowState{
