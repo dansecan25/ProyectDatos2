@@ -2,8 +2,8 @@
 // Created by dansecan on 27/03/23.
 //
 
-#ifndef PROYECTDATOS2_GAMESTATESTACK_H
-#define PROYECTDATOS2_GAMESTATESTACK_H
+#ifndef PROYECTDATOS2_WINDOWSTATESSTACK_H
+#define PROYECTDATOS2_WINDOWSTATESSTACK_H
 #include <SFML/Graphics.hpp>
 #include <iostream>
 class WindowState;
@@ -20,10 +20,10 @@ private:
 
 };
 
-class gameStateStack {
+class WindowStatesStack {
 public:
-    gameStateStack();
-    ~gameStateStack();
+    WindowStatesStack();
+    ~WindowStatesStack();
     void push(WindowState* dat);
     WindowState* peek();
     void pop();
@@ -34,4 +34,4 @@ public:
 };
 
 
-#endif //PROYECTDATOS2_GAMESTATESTACK_H
+#endif //PROYECTDATOS2_WINDOWSTATESSTACK_H

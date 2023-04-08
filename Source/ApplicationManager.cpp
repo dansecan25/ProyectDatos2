@@ -5,7 +5,7 @@
 #include "../Headers/ApplicationManager.h"
 
 ApplicationManager::ApplicationManager() {
-    this->states=new gameStateStack();
+    this->states=new WindowStatesStack();
     this->supportedKeys=new LinkedListStructured();
 
     this->createWindow();
@@ -47,7 +47,7 @@ void ApplicationManager::endApp() {
 void ApplicationManager::createWindow() {
     sf::ContextSettings windowSettings;
     windowSettings.antialiasingLevel=0;
-    this->mainWindow = new sf::RenderWindow(VideoMode(1000, 626), "Battle Space Project", sf::Style::Titlebar | sf::Style::Close,windowSettings);
+    this->mainWindow = new sf::RenderWindow(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Battle Space Project", sf::Style::Titlebar | sf::Style::Close,windowSettings);
     this->mainWindow->setFramerateLimit(60);
     this->mainWindow->setVerticalSyncEnabled(false);
 
@@ -80,16 +80,17 @@ void ApplicationManager::update() {
  * @brief renders the images and objects into the window
  */
 void ApplicationManager::render() {
+    //loads the main background for the window
     sf::Texture backgroundTexture;
     backgroundTexture.loadFromFile("../Resources/Images/SpaceBackground.jpg");
     sf::Sprite backgroundSprite(backgroundTexture);
-
+    //takes the state that will be rendered
     this->mainWindow->clear();
     this->mainWindow->draw(backgroundSprite);
     if(!this->states->isEmpty()){ //checks if the stack is not empty
         this->states->peek()->stateRender(this->mainWindow);
     }
-
+    //displays the content of the window
     this->mainWindow->display();
 }
 /**

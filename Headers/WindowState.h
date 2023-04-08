@@ -6,7 +6,8 @@
 #define PROYECTDATOS2_WINDOWSTATE_H
 #include "../Headers/Entities.h"
 #include "../Headers/LInkedListFilesHeaders/LinkedListStructured.h"
-#include "../Headers/LInkedListFilesHeaders/gameStateStack.h"
+#include "../Headers/LInkedListFilesHeaders/WindowStatesStack.h"
+//#include <iostream>
 struct mousePositions{
     int posXi;
     int posYi;
@@ -17,7 +18,7 @@ struct mousePositions{
 };
 class WindowState {
 protected:
-    gameStateStack* states;
+    WindowStatesStack* states;
     mousePositions positions{};
     sf::RenderWindow* window;
     LinkedListStructured* supportedKeys;
@@ -26,15 +27,23 @@ protected:
     bool quit;
     virtual void initKeybinds()=0;
 public:
-    WindowState(sf::RenderWindow* window, LinkedListStructured* mapStructures,gameStateStack* states);
+    WindowState(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states);
     virtual ~WindowState();
     [[nodiscard]] const bool& getQuit() const;
     virtual void updateInput(const float& dt)=0;
-    virtual void checkForQuit();
     virtual void stateUpdate(const float& dt)=0;
     virtual void stateRender(sf::RenderTarget * target)=0;
-    virtual void endState()=0;
+    void endState();
     void updateMousePosScreen();
+
+
+
+
+
+
+
+
+
 
 };
 

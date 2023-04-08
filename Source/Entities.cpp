@@ -5,17 +5,17 @@
 #include "../Headers/Entities.h"
 
 Entities::Entities() {
-    this->entityShape.setSize(sf::Vector2f(50,50));
-    this->entityShape.setFillColor(sf::Color::White);
     this->movementSpeed=100;
 }
 
 Entities::~Entities() {
-
+    delete this->sprite;
 }
 
 void Entities::move(const float& dt,const float x, const float y) {
-    this->entityShape.move(x*this->movementSpeed*dt,y*this->movementSpeed*dt);
+    if(this->sprite){
+        this->sprite->move(x*this->movementSpeed*dt,y*this->movementSpeed*dt);
+    }
 
 }
 

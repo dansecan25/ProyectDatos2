@@ -17,6 +17,8 @@ public:
     virtual void renderEntity(sf::RenderTarget* target);
 
 protected:
+    sf::Sprite* sprite;
+    sf::Texture* texture;
     sf::RectangleShape entityShape;
     float movementSpeed;
 };

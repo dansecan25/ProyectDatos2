@@ -18,10 +18,10 @@ add_executable(ProyectDatos2 main.cpp Source/GameControls.cpp Headers/GameContro
         Source/BulletCollector.cpp Headers/BulletCollector.h ImageLoader.cpp ImageLoader.h
         Source/SfmlButton.cpp Headers/SfmlButton.h
         Source/WindowState.cpp Headers/WindowState.h
-        Source/LInkedLIstFIlesSources/gameStateStack.cpp Headers/LInkedListFilesHeaders/gameStateStack.h
+        Source/LInkedLIstFIlesSources/WindowStatesStack.cpp Headers/LInkedListFilesHeaders/WindowStatesStack.h
         Source/LInkedLIstFIlesSources/sfmlTexturesList.cpp Headers/LInkedListFilesHeaders/sfmlTexturesList.h
         Source/Entities.cpp Headers/Entities.h
         Source/LInkedLIstFIlesSources/LinkedListStructured.cpp Headers/LInkedListFilesHeaders/LinkedListStructured.h
         Source/LInkedLIstFIlesSources/LinkedListStructured.cpp Source/MainScreen.cpp
-        Headers/MainScreen.h Headers/GameModeScreen.cpp Headers/GameModeScreen.h)
+        Headers/MainScreen.h Source/GameModeScreen.cpp Headers/GameModeScreen.h)
 target_link_libraries(ProyectDatos2 sfml-graphics sfml-window sfml-system)

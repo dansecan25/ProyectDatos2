@@ -17,7 +17,7 @@ private:
 
     sf::Clock dtClock;
     float dt;
-    gameStateStack* states;
+    WindowStatesStack* states;
     LinkedListStructured* supportedKeys;
     void createWindow();
     void initWindowState();
