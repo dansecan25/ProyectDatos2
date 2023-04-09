@@ -8,12 +8,16 @@
 #include "../ImageLoader.h"
 #include "../Headers/MainScreen.h"
 #include "../Headers/LInkedListFilesHeaders/LinkedListStructured.h"
+#define WINDOW_WIDTH 1000
+#define WINDOW_HEIGHT 626
 
 using namespace sf;
 class ApplicationManager {
 private:
     sf::RenderWindow * mainWindow; //will store the window
     sf::Event sfEvent;
+    sf::RectangleShape generalBackGround;
+    sf::Texture generalBackGroundTexture;
 
     sf::Clock dtClock;
     float dt;
@@ -22,6 +26,8 @@ private:
     void createWindow();
     void initWindowState();
     void initKeys();
+    void renderBackgroundGeneral();
+    void initGeneralBackground();
 
 public:
     ApplicationManager();

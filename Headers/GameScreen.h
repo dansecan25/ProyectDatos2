@@ -7,18 +7,18 @@
 #include "../Headers/WindowState.h"
 #include "SfmlButton.h"
 #include <iostream>
-#define WINDOW_WIDTH 1000
-#define WINDOW_HEIGHT 626
 using namespace std;
 class GameScreen
         : public WindowState{
 private:
-    Entities player;
+    Player *player;
     sf::RectangleShape backGround;
     sf::Texture backGroundTexture;
     void initObjects();
     void initVariables();
     void initKeybinds() override;
+    void initTextures();
+    void initPlayer();
 public:
     explicit GameScreen(sf::RenderWindow * window, LinkedListStructured* mapStructures, WindowStatesStack* states);
     ~GameScreen() override;

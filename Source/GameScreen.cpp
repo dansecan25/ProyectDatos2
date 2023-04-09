@@ -14,28 +14,27 @@ GameScreen::GameScreen(sf::RenderWindow* window, LinkedListStructured* mapStruct
     this->initVariables();
     this->initObjects();
     this->initKeybinds();
+    this->initTextures();
+    this->initPlayer();
 
 }
-
 GameScreen::~GameScreen() {
-
+    delete player;
 }
-
 /**
  * @brief updates the inputs events on the current state of the window
  * @param dt const float reference
  */
 void GameScreen::updateInput(const float &dt) {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("Move_Up")))){
-        this->player.move(dt, 0,-2);
+        this->player->move(dt, 0,-2);
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("Move_Down")))){
-        this->player.move(dt, 0,2);
+        this->player->move(dt, 0,2);
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("Quit")))){
         this->endState();
     }
-
 }
 /**
  * @brief updates the events in the window
@@ -44,7 +43,7 @@ void GameScreen::updateInput(const float &dt) {
 void GameScreen::stateUpdate(const float& dt) {
     this->updateMousePosScreen();
     this->updateInput(dt);
-    this->player.updateEntity(dt);
+    this->player->updateEntity(dt);
 }
 /**
  * @brief states what will be drawn in the window
@@ -54,7 +53,8 @@ void GameScreen::stateRender(sf::RenderTarget * target) {
     if(!target){
         target=this->window;
     }
-    this->player.renderEntity(this->window);
+    this->player->renderEntity(target);
+
 }
 /**
  * @brief stores the accepted keys in the linked list
@@ -68,9 +68,10 @@ void GameScreen::initKeybinds() {
  * @brief init the background objects, GUI
  */
 void GameScreen::initObjects() {
-    this->backGround.setSize(sf::Vector2f(static_cast<float>(1000),static_cast<float>(60)));
+    //this->backGround.setSize(sf::Vector2f(static_cast<float>(1000),static_cast<float>(60)));
     //this->backGroundTexture.loadFromFile("../Resources/Images/GUI.jpg");
     //this->backGround.setTexture(backGroundTexture);
+
 }
 /**
  * @brief inits the variables
@@ -78,9 +79,15 @@ void GameScreen::initObjects() {
 void GameScreen::initVariables() {
 
 
+}
 
+void GameScreen::initTextures() {
+    this->textures->insertNode("PlayerTexture","../Resources/Images/SpaceShipPlayer.png");
+}
 
-
+void GameScreen::initPlayer() {
+    std::string route=this->textures->getNode("PlayerTexture");
+    this->player=new Player(50, 310,route);
 }
 
 

@@ -7,9 +7,9 @@
 ApplicationManager::ApplicationManager() {
     this->states=new WindowStatesStack();
     this->supportedKeys=new LinkedListStructured();
-
     this->createWindow();
     this->initKeys();
+    this->initGeneralBackground();
     this->initWindowState();
 
 
@@ -80,13 +80,9 @@ void ApplicationManager::update() {
  * @brief renders the images and objects into the window
  */
 void ApplicationManager::render() {
-    //loads the main background for the window
-    sf::Texture backgroundTexture;
-    backgroundTexture.loadFromFile("../Resources/Images/SpaceBackground.jpg");
-    sf::Sprite backgroundSprite(backgroundTexture);
     //takes the state that will be rendered
     this->mainWindow->clear();
-    this->mainWindow->draw(backgroundSprite);
+    this->renderBackgroundGeneral();
     if(!this->states->isEmpty()){ //checks if the stack is not empty
         this->states->peek()->stateRender(this->mainWindow);
     }
@@ -118,6 +114,26 @@ void ApplicationManager::initKeys() {
     this->supportedKeys->insertNode("Escape",sf::Keyboard::Key::Escape);
     this->supportedKeys->insertNode("W",sf::Keyboard::Key::W);
     this->supportedKeys->insertNode("S",sf::Keyboard::Key::S);
+}
+/**
+ * @brief draws the background for all windows
+ */
+void ApplicationManager::renderBackgroundGeneral() {
+    this->mainWindow->draw(this->generalBackGround);
+//    sf::Texture backgroundTexture;
+//    backgroundTexture.loadFromFile("../Resources/Images/SpaceBackground.jpg");
+//    sf::Sprite backgroundSprite(backgroundTexture);
+//    this->mainWindow->draw(backgroundSprite);
+}
+/**
+ * @brief initiates the background texture and shape
+ */
+void ApplicationManager::initGeneralBackground() {
+    this->generalBackGround.setSize(sf::Vector2f(static_cast<float>(WINDOW_WIDTH),static_cast<float>(WINDOW_HEIGHT)));
+    if (!this->generalBackGroundTexture.loadFromFile("../Resources/Images/SpaceBackground.jpg")){
+        exit(50);
+    }
+    this->generalBackGround.setTexture(&this->generalBackGroundTexture);
 }
 
 

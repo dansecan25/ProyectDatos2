@@ -8,19 +8,31 @@
 #include <vector> //temporary
 
 class Entities {
+private:
+    void initVariables();
 public:
     Entities();
     ~Entities();
     virtual void move(const float& dt, const float x, const float y);
-
+    void giveTexture(std::string texture);
     virtual void updateEntity(const float& dt);
     virtual void renderEntity(sf::RenderTarget* target);
+    virtual void setPosition(const float x, const float y);
 
 protected:
     sf::Sprite* sprite;
-    sf::Texture* texture;
-    sf::RectangleShape entityShape;
+    sf::Texture* spriteTexture;
     float movementSpeed;
+
+
+
+
+
+
+
+
+
+
 };
 
 

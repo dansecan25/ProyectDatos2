@@ -12,18 +12,25 @@
  */
 WindowState::WindowState(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states) {
     this->keyBinds=new LinkedListStructured();
+    this->textures=new texturesRoutes();
     this->supportedKeys=mapStructures;
     this->window=window;
     this->positions= {0,0,0,0,0,0};
     this->states=states;
     this->quit=false;
 }
-
+/**
+ * @brief destructor of WindowState frees pointers memory
+ */
 WindowState::~WindowState() {
     while(keyBinds->getLen()>0){
         keyBinds->deleteLast();
     }
     delete keyBinds;
+    while(textures->getLen()>0){
+        textures->deleteLast();
+    }
+    delete textures;
 }
 /**
  * @brief checks if the window has been called to quit

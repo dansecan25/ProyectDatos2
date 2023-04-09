@@ -4,12 +4,21 @@
 
 #ifndef PROYECTDATOS2_PLAYER_H
 #define PROYECTDATOS2_PLAYER_H
+#include "../Headers/Entities.h"
 
-
-class Player {
+class Player :
+        public Entities{
 public:
-    Player();
+    Player(float x, float y, std::string playerTexture);
     ~Player();
+
+private:
+    void initVariables();
+    void initPlayerData();
+
+
+
+
 
 
 

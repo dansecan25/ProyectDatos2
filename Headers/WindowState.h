@@ -4,10 +4,10 @@
 
 #ifndef PROYECTDATOS2_WINDOWSTATE_H
 #define PROYECTDATOS2_WINDOWSTATE_H
-#include "../Headers/Entities.h"
+#include "../Headers/Player.h"
 #include "../Headers/LInkedListFilesHeaders/LinkedListStructured.h"
 #include "../Headers/LInkedListFilesHeaders/WindowStatesStack.h"
-//#include <iostream>
+#include "../Headers/LInkedListFilesHeaders/texturesRoutes.h"
 struct mousePositions{
     int posXi;
     int posYi;
@@ -23,7 +23,7 @@ protected:
     sf::RenderWindow* window;
     LinkedListStructured* supportedKeys;
     LinkedListStructured* keyBinds;
-    std::vector<sf::Texture> textures;//change to a linked list
+    texturesRoutes* textures;
     bool quit;
     virtual void initKeybinds()=0;
 public:
