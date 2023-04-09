@@ -90,4 +90,8 @@ void GameScreen::initPlayer() {
     this->player=new Player(50, 310,route);
 }
 
+void GameScreen::updateEventsSpecial(sf::Event event) {
+
+}
+
 

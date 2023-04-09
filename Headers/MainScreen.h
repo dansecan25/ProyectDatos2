@@ -24,13 +24,20 @@ public:
     void renderButtons(sf::RenderTarget * target) const;
     void stateUpdate(const float& dt) override;
     void stateRender(sf::RenderTarget * target) override;
+    void updateEventsSpecial(sf::Event event) override;
 private:
     sf::Font font;
     sf::RectangleShape title;
     sf::Texture titleTexture;
+    sf::RectangleShape entry;
+    sf::Text playerName;
+    std::string playerInput;
+    bool typing;
     void initFonts();
     void initButtons();
     void initTitle();
+    void initEntry();
+    void updateEntry(sf::Event event);
     void renderTitle(sf::RenderTarget *target);
     void initKeybinds() override;
 

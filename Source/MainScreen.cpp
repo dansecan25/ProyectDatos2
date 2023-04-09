@@ -4,7 +4,6 @@
 
 #include <sstream>
 #include "../Headers/MainScreen.h"
-#include "../Headers/GameModeScreen.h"
 
 MainScreen::MainScreen(sf::RenderWindow* window, LinkedListStructured* supportedKeys, WindowStatesStack* states)
 : WindowState(window,supportedKeys,states){
@@ -12,6 +11,7 @@ MainScreen::MainScreen(sf::RenderWindow* window, LinkedListStructured* supported
     this->initTitle();
     this->initKeybinds();
     this->initButtons();
+    this->initEntry();
 
 }
 
@@ -49,16 +49,8 @@ void MainScreen::stateRender(sf::RenderTarget *target) {
     }
     this->renderButtons(target);
     this->renderTitle(target);
-    //create the title
-    sf::Text tempTitle;
-    tempTitle.setPosition(430,170);
-    tempTitle.setFont(this->font);
-    tempTitle.setCharacterSize(30);
-    tempTitle.setString("SPACE BATTLE");
-    tempTitle.setFillColor(sf::Color::White);
-
-    target->draw(tempTitle);
-    //change later to a texture that will be made
+    target->draw(entry);
+    target->draw(playerName);
     //temporary mouse position
     sf::Text mouseText;
     mouseText.setPosition(this->positions.posXf,this->positions.posYf-50);
@@ -84,7 +76,7 @@ void MainScreen::initFonts() {
  * @brief defines the buttons that will be created
  */
 void MainScreen::initButtons() {
-    this->startButton=new SfmlButton(450, 400, 200, 75, &font, "Start Game",
+    this->startButton=new SfmlButton(385, 400, 200, 75, &font, "Start Game",
                                      sf::Color(70,70,70,200),
                                      sf::Color(150,150,150,255),
                                      sf::Color(20,20,20,200));
@@ -137,9 +129,72 @@ void MainScreen::initTitle() {
  * @param target RenderTarget pointer
  */
 void MainScreen::renderTitle(sf::RenderTarget *target) {
+    //create the title
+    sf::Text tempTitle;
+    tempTitle.setPosition(380,170);
+    tempTitle.setFont(this->font);
+    tempTitle.setCharacterSize(30);
+    tempTitle.setString("SPACE BATTLE");
+    tempTitle.setFillColor(sf::Color::White);
+
+    target->draw(tempTitle);
     //this->titleTexture.loadFromFile("../Resources/Images/TitleImage.jpg");
     //this->titleTexture.setTexture(backGroundTexture);
     //this->target.
+}
+
+void MainScreen::initEntry() {
+    this->entry.setSize(sf::Vector2f(static_cast<float>(200),static_cast<float>(30)));
+    this->entry.setPosition(385,300);
+    this->entry.setFillColor(sf::Color::White);
+    this->playerInput="Name";
+    this->playerName.setFont(font);
+    this->playerName.setString(playerInput);
+    this->playerName.setPosition(385,303);
+    this->playerName.setCharacterSize(20);
+    this->playerName.setFillColor(sf::Color::Black);
+    this->typing=false;
+}
+/**
+ * @brief updates the events on the window
+ * @param event sf::Event
+ */
+void MainScreen::updateEventsSpecial(sf::Event event) {
+    this->updateEntry(event);
+}
+/**
+ * @brief updates the entry text
+ * @param event sf::Event
+ */
+void MainScreen::updateEntry(sf::Event event) {
+    //sets the typing variable to true if the entry box was clicked
+    if(this->entry.getGlobalBounds().contains(positions.posXf,positions.posYf)){
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+            this->typing=true;
+        }
+    }
+    if(!this->entry.getGlobalBounds().contains(positions.posXf,positions.posYf)){
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+            if(this->typing){
+                this->typing=false;
+            }
+        }
+    }
+    if (event.type == sf::Event::TextEntered) { //if the keyboard keys are pressed to type
+        if (this->typing) {
+            if (event.text.unicode == 8) {
+                if (playerInput.size() > 0) {
+                    playerInput.erase(playerInput.size() - 1, 1); // erase the last character in the string
+                    playerName.setString(playerInput);
+                }
+            } else { //if backspace is not pressed, write
+                if(playerInput.size()<17) {
+                    playerInput += event.text.unicode;
+                    playerName.setString(playerInput);
+                }
+            }
+        }
+    }
 }
 
 

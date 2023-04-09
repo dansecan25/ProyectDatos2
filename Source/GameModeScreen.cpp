@@ -83,3 +83,7 @@ void GameModeScreen::renderButtons(sf::RenderTarget *target) {
     this->hardButton->render(target);
 
 }
+
+void GameModeScreen::updateEventsSpecial(sf::Event event) {
+
+}

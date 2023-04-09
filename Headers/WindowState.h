@@ -33,6 +33,7 @@ public:
     virtual void updateInput(const float& dt)=0;
     virtual void stateUpdate(const float& dt)=0;
     virtual void stateRender(sf::RenderTarget * target)=0;
+    virtual void updateEventsSpecial(sf::Event event)=0;
     void endState();
     void updateMousePosScreen();
 

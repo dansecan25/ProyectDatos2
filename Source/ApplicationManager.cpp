@@ -62,8 +62,7 @@ void ApplicationManager::updateDt() {
  * @brief updates the elements of the game window
  */
 void ApplicationManager::update() {
-    this->updateEvents();
-
+    this->updateEvents(); //updates the events on screen
     if(!this->states->isEmpty()){
         this->states->peek()->stateUpdate(this->dt); //peeks the top element of the stack
         if(this->states->peek()->getQuit()){
@@ -93,11 +92,14 @@ void ApplicationManager::render() {
  * @brief updates the events on the game
  */
 void ApplicationManager::updateEvents() {
-    Event event{};
+    sf::Event event{};
     while (this->mainWindow->pollEvent(event))
     {
-        if (event.type == Event::Closed)
+        if (event.type == sf::Event::Closed)
             this->mainWindow->close();
+        if(!this->states->isEmpty()){ //checks if the stack is not empty
+            this->states->peek()->updateEventsSpecial(event);
+        }
     }
 }
 /**

@@ -23,6 +23,7 @@ public:
     void updateInput(const float& dt) override;
     void stateUpdate(const float& dt) override;
     void stateRender(sf::RenderTarget * target) override;
+    void updateEventsSpecial(sf::Event event) override;
 
     void initButtons();
     sf::Font font;
