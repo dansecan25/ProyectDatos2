@@ -7,29 +7,16 @@
 using namespace std;
 
 /**
- * @brief constructor of the linkedList
+ * @brief constructor of the list of enemies
  */
 EnemyList::EnemyList() {
     head= nullptr;
     //len=0;
 }
 /**
- * @brief inserts a node into the linked list
- * @param cDat char pointer
- * @param dat int
+ * Inserts a new enemy in the enemy list
+ * * @param enemy enemy node
  */
-void EnemyList::insertEnemy(const int id,float speed) {
-    EnemyShip *enemy = new EnemyShip(id, speed);
-    if (getHead() == NULL)
-    {
-        setHead(enemy);
-    }
-    else
-    {
-        getLast()->editPointer(enemy);
-    }
-}
-
 void EnemyList::insertEnemy(EnemyShip *enemy) {
     if (getHead() == NULL)
     {
@@ -40,11 +27,10 @@ void EnemyList::insertEnemy(EnemyShip *enemy) {
         getLast()->editPointer(enemy);
     }
 }
-
 /**
- * Looks if a determined node exists in the list
- * @param data
- * @return
+ * Looks if a determined enemy exists in the list
+ * @param id id of the enemy
+ * @return enemy found
  */
 EnemyShip* EnemyList::findEnemy(int id){
     EnemyShip *find =  getHead();
@@ -62,14 +48,14 @@ void EnemyList::setHead(EnemyShip *H) {
 }
 /**
  * Returns the head of the list
- * @return
+ * @return head
  */
 EnemyShip* EnemyList::getHead() {
     return head;
 }
 /**
- * Returns the last node of the list
- * @return
+ * Returns the last node of the enemy list
+ * @return last
  */
 EnemyShip* EnemyList::getLast() {
     EnemyShip *last = getHead();
@@ -79,8 +65,8 @@ EnemyShip* EnemyList::getLast() {
     return last;
 }
 /**
- * Prints the list with all of its nodes
- * @param n
+ * Prints the enemy list with all of its enemies
+ * @param n head of the list
  */
 void EnemyList::printList(EnemyShip *n){
 

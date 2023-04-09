@@ -15,7 +15,7 @@ class EnemyShip {
 public:
     //constructor sets ID number, loads sprite
     EnemyShip();
-    EnemyShip(int,float);
+    EnemyShip(int id,float speed);
     sf::Sprite & getSprite();
     void setLocation(float,float);
 
@@ -35,6 +35,7 @@ public:
     bool alive;
     float speed;
     int id;
+    int resistance;
 
 private:
 

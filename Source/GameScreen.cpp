@@ -21,6 +21,15 @@ GameScreen::GameScreen(sf::RenderWindow *window, LinkedListStructured *mapStruct
     } else{
         cout<< "Error with number of enemies";
     }
+
+    for(int i=0; i<=number_of_enemies; i++)
+    {
+        EnemyShip *enemy = new EnemyShip(i, 100);//alienMinSpeed + (rand()%alienMaxSpeed) );
+        enemy->setLocation(i*100+50, enemy->getSprite().getGlobalBounds().height/2);
+        enemyList->insertEnemy(enemy);
+    }
+    cout<<"Print the enemy list";
+    enemyList->printList(enemyList->getHead());
     //EnemyManager enemy_manager;
     //enemy_manager.setLevel(mode);
 }
@@ -46,14 +55,6 @@ void GameScreen::stateUpdate(const float& dt) {
     this->updateMousePosScreen();
     this->updateInput(dt);
     this->player.updateEntity(dt);
-
-    for(int i=0; i<number_of_enemies; i++)
-    {
-        EnemyShip *enemy = new EnemyShip(i, alienMinSpeed + (rand()%alienMaxSpeed) );
-        enemy->setLocation(i*100+50, enemy->getSprite().getGlobalBounds().height/2);
-        enemyList->insertEnemy(enemy);
-    }
-    enemyList->printList(enemyList->getHead());
 
     sf::Time t = alienClock.getElapsedTime();
 

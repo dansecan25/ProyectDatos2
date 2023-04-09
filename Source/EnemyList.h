@@ -16,8 +16,6 @@ public:
     EnemyShip *getHead();
     EnemyShip *getLast();
 
-    void insertEnemy(const int id, float speed);
-
     void printList(EnemyShip *n);
 
     void insertEnemy(EnemyShip *enemy);

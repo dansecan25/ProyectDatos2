@@ -23,8 +23,8 @@ struct MyException : public exception {
  * constructor to create an enemy
  */
 EnemyShip::EnemyShip() {
-    speed = 0;
-    id = 0;
+    this->speed = 0;
+    this->id = 0;
 }
 /**
  * constructor to create an enemy with an id and its speed
@@ -32,9 +32,9 @@ EnemyShip::EnemyShip() {
 EnemyShip::EnemyShip(int id,float speed) {
     next=NULL;
 
-    alive = true;
-    id = id;
-    speed = speed;
+    this->alive = true;
+    this->id = id;
+    this->speed = speed;
 
     // Load an enemy texture
     if(!texture.loadFromFile("../Resources/Images/Enemy0.png"))
@@ -51,7 +51,7 @@ sf::Sprite & EnemyShip::getSprite()
 }
 
 void EnemyShip::setResistance(int resistance){
-    resistance = resistance;
+    this->resistance = resistance;
 }
 void EnemyShip::setLocation(float xpos, float ypos)
 {
@@ -60,7 +60,7 @@ void EnemyShip::setLocation(float xpos, float ypos)
 
 void EnemyShip::kill()
 {
-    alive = false;
+    this->alive = false;
 }
 
 bool EnemyShip::isAlive()
