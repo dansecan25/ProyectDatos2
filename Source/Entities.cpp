@@ -18,7 +18,10 @@ Entities::~Entities() {
  * @param y const float
  */
 void Entities::move(const float& dt,const float x, const float y) {
-    this->sprite->move(x*this->movementSpeed*dt,y*this->movementSpeed*dt);
+    if(this->sprite){
+        this->sprite->move(x*this->movementSpeed*dt,y*this->movementSpeed*dt);
+
+    }
 }
 
 void Entities::updateEntity(const float &dt) {
@@ -36,7 +39,7 @@ void Entities::renderEntity(sf::RenderTarget *target) {
  * @param texture string with the route to the texture
  */
 void Entities::giveTexture(std::string texture) {
-    sf::Texture* textureT=new sf::Texture();
+    auto* textureT=new sf::Texture();
     textureT->loadFromFile(texture);
     this->spriteTexture=textureT;
     this->sprite= new sf::Sprite(*this->spriteTexture);
@@ -54,5 +57,7 @@ void Entities::initVariables() {
  * @param y const float
  */
 void Entities::setPosition(const float x, const float y) {
-    this->sprite->setPosition(x,y);
+    if(this->sprite){
+        this->sprite->setPosition(x,y);
+    }
 }
