@@ -2,8 +2,8 @@
 // Created by monicaegm on 4/6/23.
 //
 
-#include "GameModeScreen.h"
-#include "GameScreen.h"
+#include "../Headers/GameModeScreen.h"
+#include "../Headers/GameScreen.h"
 
 GameModeScreen::GameModeScreen(sf::RenderWindow* window,LinkedListStructured* mapStructures,gameStateStack* states)
 :WindowState(window, mapStructures,states){
@@ -66,17 +66,17 @@ void GameModeScreen::updateButtons() {
     this->easyButton->update(this->positions.posXf, this->positions.posYf);
     if (this->easyButton->isPressed()) {
         cout<<"easy";
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states));
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 1));
     }
     this->mediumButton->update(this->positions.posXf, this->positions.posYf);
     if (this->mediumButton->isPressed()) {
         cout<<"medium";
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states));
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 2));
     }
     this->hardButton->update(this->positions.posXf, this->positions.posYf);
     if (this->hardButton->isPressed()) {
         cout<<"hard";
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states));
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 3));
     }
 }
 void GameModeScreen::renderButtons(sf::RenderTarget *target) {
