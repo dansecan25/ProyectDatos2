@@ -10,12 +10,13 @@
 #include <cstdlib>
 #include <math.h>
 #include "Bullet.h"
+using namespace std;
 
 class EnemyShip {
 public:
     //constructor sets ID number, loads sprite
     EnemyShip();
-    EnemyShip(int id,float speed);
+    EnemyShip(int id,float speed, char mode);
     sf::Sprite & getSprite();
     void setLocation(float,float);
 
@@ -37,7 +38,9 @@ public:
     int id;
     int resistance;
 
-private:
+    string level_sketch;
+
+    basic_string<char> makePattern(int);
 
 
 };

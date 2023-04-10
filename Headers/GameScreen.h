@@ -30,6 +30,8 @@ private:
     //EnemyShip alienArray[NUMBER_OF_ALIENS];
 
     int number_of_enemies;
+    string level_sketch;
+    int mode;
     EnemyList *enemyList = new EnemyList();
 
     void initKeybinds() override;

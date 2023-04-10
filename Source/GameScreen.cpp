@@ -3,35 +3,74 @@
 //
 
 #include "../Headers/GameScreen.h"
-#include "../Headers/Player.h"
 #include <iostream>
-#include <vector>
 #include <list>
-#include <stdexcept>
 
 GameScreen::GameScreen(sf::RenderWindow *window, LinkedListStructured *mapStructures, gameStateStack *states, int mode)
 :WindowState(window, mapStructures,states){
     this->initKeybinds();
+
+    this->mode = mode;
+
     if (mode == 1){
-        number_of_enemies = 10;
+        number_of_enemies = 15;
     } else if (mode == 2){
         number_of_enemies = 15;
     } else if (mode == 3){
         number_of_enemies = 20;
     } else{
-        cout<< "Error with number of enemies";
+        cout<< "Error with number of enemies \n";
     }
 
-    for(int i=0; i<=number_of_enemies; i++)
+    EnemyShip *pattern = new EnemyShip();
+    this->level_sketch = pattern->makePattern(mode);
+    int i = 0;
+    int xpos = 750;
+    int ypos = 0;
+    for (char sketch_character : level_sketch) {
+        switch (sketch_character) {
+            case '\n': {
+                cout<<"no pattern";
+                ypos = 0;
+                xpos = xpos + 50;
+                break;
+            }
+            case '0': {
+                EnemyShip *enemy = new EnemyShip(i, 100, sketch_character);//alienMinSpeed + (rand()%alienMaxSpeed) );
+                enemy->setLocation(xpos, ypos*100+50);//enemy->getSprite().getGlobalBounds().height/2
+                enemyList->insertEnemy(enemy);
+                i++;
+                ypos++;
+                break;
+            }
+            case '1': {
+                EnemyShip *enemy = new EnemyShip(i, 100, sketch_character);//alienMinSpeed + (rand()%alienMaxSpeed) );
+                enemy->setLocation(xpos, ypos*100+50);//enemy->getSprite().getGlobalBounds().height/2
+                enemyList->insertEnemy(enemy);
+                i++;
+                ypos++;
+                break;
+            }
+            case '2': {
+                EnemyShip *enemy = new EnemyShip(i, 100, sketch_character);//alienMinSpeed + (rand()%alienMaxSpeed) );
+                enemy->setLocation(xpos, ypos*100+50);//enemy->getSprite().getGlobalBounds().height/2
+                enemyList->insertEnemy(enemy);
+                i++;
+                ypos++;
+                break;
+            }
+    }}
+
+    /*
+    for(int i=0; i<number_of_enemies; i++)
     {
-        EnemyShip *enemy = new EnemyShip(i, 100);//alienMinSpeed + (rand()%alienMaxSpeed) );
-        enemy->setLocation(i*100+50, enemy->getSprite().getGlobalBounds().height/2);
+        EnemyShip *enemy = new EnemyShip(i, 100, mode);//alienMinSpeed + (rand()%alienMaxSpeed) );
+        enemy->setLocation(enemy->getSprite().getGlobalBounds().height/2, i*100+50);
         enemyList->insertEnemy(enemy);
     }
-    cout<<"Print the enemy list";
+     */
+    cout<<"Print the enemy list\n";
     enemyList->printList(enemyList->getHead());
-    //EnemyManager enemy_manager;
-    //enemy_manager.setLevel(mode);
 }
 
 GameScreen::~GameScreen() {
@@ -55,7 +94,7 @@ void GameScreen::stateUpdate(const float& dt) {
     this->updateMousePosScreen();
     this->updateInput(dt);
     this->player.updateEntity(dt);
-
+    /*
     sf::Time t = alienClock.getElapsedTime();
 
     if(t.asSeconds() > 0.5)
@@ -65,28 +104,7 @@ void GameScreen::stateUpdate(const float& dt) {
             enemyList->findEnemy(i)->getSprite().move(0.f,enemyList->findEnemy(i)->getSpeed()*deltaTime);
         }
         alienClock.restart();
-    }
-
-    /*
-    for(int i=0; i<number_of_enemies; i++)
-    {
-        EnemyShip alien(i, alienMinSpeed + (rand()%alienMaxSpeed) );
-        alien.setLocation(i*100+50, alien.getSprite().getGlobalBounds().height/2);
-        enemyList[i].editNode(alien);
-    }
-    sf::Time t = alienClock.getElapsedTime();
-    //cout<<t.asSeconds()<<endl;
-    if(t.asSeconds() > 0.5)
-    {
-        for(size_t i=0; i<7; i++)
-        {
-            enemyList[i].getSprite().move(0.f,enemyList[i].getSpeed()*deltaTime);
-        }
-        alienClock.restart();
-    }
-    */
-
-    //enemy_manager.update();
+    }*/
 }
 
 void GameScreen::stateRender(sf::RenderTarget * target) {
@@ -95,15 +113,11 @@ void GameScreen::stateRender(sf::RenderTarget * target) {
     }
     this->player.renderEntity(this->window);
 
-    for(size_t i=0;i<number_of_enemies;i++)
-    {
-        if(enemyList->findEnemy(i)->isAlive())
-        {
+    for(size_t i=0;i<(level_sketch.length())-2;i++) {
+        if(enemyList->findEnemy(i)->isAlive()) {
             enemyList->findEnemy(i)->draw(this->window);
         }
     }
-
-    //enemy_manager.draw(this->window);
 }
 
 void GameScreen::initKeybinds() {

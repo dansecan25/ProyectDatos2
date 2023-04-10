@@ -7,18 +7,9 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
-#include <math.h>
 
-#include "../Headers/EnemyShip.h"
 using namespace std;
-/**
- * returns an exception
- */
-struct MyException : public exception {
-    const char * what () const throw () {
-        return "A C++ Exception";
-    }
-};
+
 /**
  * constructor to create an enemy
  */
@@ -29,77 +20,166 @@ EnemyShip::EnemyShip() {
 /**
  * constructor to create an enemy with an id and its speed
  */
-EnemyShip::EnemyShip(int id,float speed) {
+EnemyShip::EnemyShip(int id,float speed,char type) {
     next=NULL;
 
     this->alive = true;
     this->id = id;
     this->speed = speed;
 
-    // Load an enemy texture
-    if(!texture.loadFromFile("../Resources/Images/Enemy0.png"))
-        throw MyException();
-    //scale sprite and set texture
-    sprite.setTexture(texture);
-    sprite.scale(sf::Vector2f(0.8,0.8));
+    cout<<" \n type \n"<< type;
+        switch (type) {
+            case '\n': {
+                cout<<" no pattern ";
+                break;
+            }
+            case '0': {
+                if(!texture.loadFromFile("../Resources/Images/Enemy0.png"))
+                    cout<<"Error loading texture for enemy";
+                sprite.setTexture(texture);
+                sprite.scale(sf::Vector2f(0.03,0.03));
+                break;
+            }
+            case '1': {
+                if(!texture.loadFromFile("../Resources/Images/Enemy1.png"))
+                    cout<<"Error loading texture for enemy";
+                sprite.setTexture(texture);
+                sprite.scale(sf::Vector2f(0.02,0.02));
+                break;
+            }
+            case '2': {
+                if(!texture.loadFromFile("../Resources/Images/Enemy2.png"))
+                    cout<<"Error loading texture for enemy";
+                sprite.setTexture(texture);
+                sprite.scale(sf::Vector2f(0.12,0.12));
+                break;
+            }
+        }
     }
 
-
-sf::Sprite & EnemyShip::getSprite()
-{
+/**
+ * Returns the sprite for the enemy
+ * @return sprite
+ */
+sf::Sprite & EnemyShip::getSprite(){
     return sprite;
 }
-
+/**
+ * Defines the resistance for the enemies
+ * @param resistance int
+ */
 void EnemyShip::setResistance(int resistance){
     this->resistance = resistance;
 }
+/**
+ * Sets the coordenates for each enemy
+ * @param xpos
+ * @param ypos
+ */
 void EnemyShip::setLocation(float xpos, float ypos)
 {
     sprite.setPosition(xpos,ypos);
 }
-
+/**
+ * Defines if an enemy is killed
+ */
 void EnemyShip::kill()
 {
     this->alive = false;
 }
-
+/**
+ * Defines that the enemy is alive
+ * @return
+ */
 bool EnemyShip::isAlive()
 {
     return alive;
 }
-
+/**
+ * Sets the enemy in the screen
+ * @param target
+ */
 void EnemyShip::draw(sf::RenderTarget * target)
 {
-    //set texture
     sprite.setTexture(texture);
-    //draw
     target->draw(sprite);
 }
-
+/**
+ * Returns the speed of the enemy
+ * @return
+ */
 float EnemyShip::getSpeed() const
 {
     return speed;
 }
 /**
- * edits the node next pointer
+ * edits the node's next pointer
  * @param newNext
  */
 void EnemyShip::editPointer(EnemyShip *newNext) {
     this->next=newNext;
 }
 /**
- * returns the nodes data
+ * returns the enemies id
  * @return
  */
 int EnemyShip::getId() {
     return id;
 }
 /**
- * Returns the next node pointer
+ * Returns the next enemy
  * @return
  */
 EnemyShip* EnemyShip::getNext() {
     return next;
+}
+/**
+ * Sets the pattern of enemies to be drawn
+ * @param type
+ */
+basic_string<char> EnemyShip::makePattern(int mode){
+    switch (mode){ //pattern for showing enemies
+
+        case 0: {
+            this->level_sketch = "0 0 0 0 0 0 0 0 \n 0 0 0 0 0 0 0 0\n0 0 0 0 0 0 0 0 \n 0 0 0 0 0 0 0 0";
+
+            break;
+        }
+        case 1: {
+            this->level_sketch = "000000\n000000\n000000";
+
+            break;
+        }
+        case 2: {
+            this->level_sketch = "101010\n010101\n101010";
+
+            break;
+        }
+        case 3: {
+            this->level_sketch = "001100\n002200\n112211";
+
+            break;
+        }
+        case 4: {
+            this->level_sketch = "2222222222222222\n1111111111111111\n1010101010101010\n0101010101010101";
+
+            break;
+        }
+        case 5: {
+            this->level_sketch = "0000000000000000\n2222222222222222\n1111111111111111\n1111111111111111";
+
+            break;
+        }
+        case 6: {
+            this->level_sketch = "2121212121212121\n1212121212121212\n2121212121212121\n1212121212121212";
+
+            break;
+        }
+        case 7: {
+            this->level_sketch = "2222222222222222\n2222222222222222\n2222222222222222\n2222222222222222";
+        }
+    }
+    return level_sketch;
 }
 /*
 unsigned char EnemyShip::get_hit_timer() const
