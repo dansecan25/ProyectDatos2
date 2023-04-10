@@ -106,7 +106,7 @@ void ApplicationManager::updateEvents() {
  * @brief pushes a WindowState object into the stack
  */
 void ApplicationManager::initWindowState() {
-    this->states->push(new MainScreen(this->mainWindow, this->supportedKeys,this->states));
+    this->states->push(new MainScreen(this->mainWindow, this->supportedKeys,this->states, "Name"));
 
 }
 /**

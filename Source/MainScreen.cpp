@@ -5,8 +5,8 @@
 #include <sstream>
 #include "../Headers/MainScreen.h"
 
-MainScreen::MainScreen(sf::RenderWindow* window, LinkedListStructured* supportedKeys, WindowStatesStack* states)
-: WindowState(window,supportedKeys,states){
+MainScreen::MainScreen(sf::RenderWindow* window, LinkedListStructured* supportedKeys, WindowStatesStack* states, std::string name)
+: WindowState(window,supportedKeys,states, name){
     this->initFonts();
     this->initTitle();
     this->initKeybinds();
@@ -97,7 +97,7 @@ void MainScreen::updateButtons() {
     this->startButton->update(this->positions.posXf, this->positions.posYf);
     //here goes when start button is pressed
     if(this->startButton->isPressed()){
-        this->states->push(new GameModeScreen(this->window,this->supportedKeys,this->states));
+        this->states->push(new GameModeScreen(this->window,this->supportedKeys,this->states,this->playerInput));
     }
     this->exitButton->update(this->positions.posXf, this->positions.posYf);
     if(this->exitButton->isPressed()){
@@ -147,9 +147,8 @@ void MainScreen::initEntry() {
     this->entry.setSize(sf::Vector2f(static_cast<float>(200),static_cast<float>(30)));
     this->entry.setPosition(385,300);
     this->entry.setFillColor(sf::Color::White);
-    this->playerInput="Name";
     this->playerName.setFont(font);
-    this->playerName.setString(playerInput);
+    this->playerName.setString(this->playerInput);
     this->playerName.setPosition(385,303);
     this->playerName.setCharacterSize(20);
     this->playerName.setFillColor(sf::Color::Black);
@@ -183,14 +182,14 @@ void MainScreen::updateEntry(sf::Event event) {
     if (event.type == sf::Event::TextEntered) { //if the keyboard keys are pressed to type
         if (this->typing) {
             if (event.text.unicode == 8) {
-                if (playerInput.size() > 0) {
-                    playerInput.erase(playerInput.size() - 1, 1); // erase the last character in the string
-                    playerName.setString(playerInput);
+                if (!this->playerInput.empty()) {
+                    this->playerInput.erase(playerInput.size() - 1, 1); // erase the last character in the string
+                    playerName.setString(this->playerInput);
                 }
             } else { //if backspace is not pressed, write
                 if(playerInput.size()<17) {
-                    playerInput += event.text.unicode;
-                    playerName.setString(playerInput);
+                    this->playerInput += event.text.unicode;
+                    playerName.setString(this->playerInput);
                 }
             }
         }

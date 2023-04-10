@@ -12,17 +12,19 @@ class GameScreen
         : public WindowState{
 private:
     Player *player;
-    sf::RectangleShape backGround;
+    sf::RectangleShape HUD;
     sf::Texture backGroundTexture;
+    sf::Text playerName;
 
     void initObjects();
     void initVariables();
     void initKeybinds() override;
     void initTextures();
     void initPlayer();
+    void renderHud();
 
 public:
-    explicit GameScreen(sf::RenderWindow * window, LinkedListStructured* mapStructures, WindowStatesStack* states);
+    explicit GameScreen(sf::RenderWindow * window, LinkedListStructured* mapStructures, WindowStatesStack* states, std::string name);
     ~GameScreen() override;
     void updateInput(const float& dt) override;
     void stateUpdate(const float& dt) override;

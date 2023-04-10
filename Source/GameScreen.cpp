@@ -8,14 +8,16 @@
  * @param window RenderWindow pointer
  * @param mapStructures LinkedListStructured pointer
  * @param states gameStatesStack pointer
+ * @param name string
  */
-GameScreen::GameScreen(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states)
-:WindowState(window, mapStructures,states){
+GameScreen::GameScreen(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states, std::string name)
+:WindowState(window, mapStructures,states, name){
     this->initVariables();
     this->initObjects();
     this->initKeybinds();
     this->initTextures();
     this->initPlayer();
+
 
 }
 GameScreen::~GameScreen() {
@@ -54,6 +56,7 @@ void GameScreen::stateRender(sf::RenderTarget * target) {
         target=this->window;
     }
     this->player->renderEntity(target);
+    this->renderHud();
 
 }
 /**
@@ -65,11 +68,13 @@ void GameScreen::initKeybinds() {
     this->keyBinds->insertNode("Quit",this->supportedKeys->getNode("Escape"));
 }
 /**
- * @brief init the background objects, GUI
+ * @brief init the background objects, HUD
  */
 void GameScreen::initObjects() {
-    //this->backGround.setSize(sf::Vector2f(static_cast<float>(1000),static_cast<float>(60)));
-    //this->backGroundTexture.loadFromFile("../Resources/Images/GUI.jpg");
+    this->HUD.setSize(sf::Vector2f(static_cast<float>(1000),static_cast<float>(60)));
+    this->HUD.setPosition(0,0);
+
+    //this->backGroundTexture.loadFromFile("../Resources/Images/HUD.jpg");
     //this->backGround.setTexture(backGroundTexture);
 
 }
@@ -77,21 +82,29 @@ void GameScreen::initObjects() {
  * @brief inits the variables
  */
 void GameScreen::initVariables() {
-
-
 }
-
+/**
+ * @brief initiates the textures for the game class
+ */
 void GameScreen::initTextures() {
     this->textures->insertNode("PlayerTexture","../Resources/Images/SpaceShipPlayer.png");
 }
-
+/**
+ * @brief initiates the player class for the player ship
+ */
 void GameScreen::initPlayer() {
     std::string route=this->textures->getNode("PlayerTexture");
     this->player=new Player(50, 310,route);
+
 }
 
 void GameScreen::updateEventsSpecial(sf::Event event) {
 
+}
+
+void GameScreen::renderHud() {
+    this->HUD.setFillColor(sf::Color::White);
+    this->window->draw(HUD);
 }
 
 

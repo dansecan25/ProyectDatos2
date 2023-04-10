@@ -13,7 +13,7 @@ using namespace std;
 class MainScreen
         :public WindowState{
 public:
-    MainScreen(sf::RenderWindow* window, LinkedListStructured* supportedKeys, WindowStatesStack* states);
+    MainScreen(sf::RenderWindow* window, LinkedListStructured* supportedKeys, WindowStatesStack* states, std::string name);
     virtual ~MainScreen();
     SfmlButton * startButton;
     SfmlButton * exitButton;
@@ -31,7 +31,6 @@ private:
     sf::Texture titleTexture;
     sf::RectangleShape entry;
     sf::Text playerName;
-    std::string playerInput;
     bool typing;
     void initFonts();
     void initButtons();

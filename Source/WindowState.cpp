@@ -10,13 +10,14 @@
  * @param mapStructures LinkedListStructures pointer
  * @param states WindowStatesStack pointer
  */
-WindowState::WindowState(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states) {
+WindowState::WindowState(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states, std::string name) {
     this->keyBinds=new LinkedListStructured();
     this->textures=new texturesRoutes();
     this->supportedKeys=mapStructures;
     this->window=window;
     this->positions= {0,0,0,0,0,0};
     this->states=states;
+    this->playerInput=name;
     this->quit=false;
 }
 /**

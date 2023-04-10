@@ -24,10 +24,11 @@ protected:
     LinkedListStructured* supportedKeys;
     LinkedListStructured* keyBinds;
     texturesRoutes* textures;
+    std::string playerInput;
     bool quit;
     virtual void initKeybinds()=0;
 public:
-    WindowState(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states);
+    WindowState(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states, std::string name);
     virtual ~WindowState();
     [[nodiscard]] const bool& getQuit() const;
     virtual void updateInput(const float& dt)=0;

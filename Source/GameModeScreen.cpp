@@ -5,8 +5,8 @@
 #include "../Headers/GameModeScreen.h"
 #include "../Headers/GameScreen.h"
 
-GameModeScreen::GameModeScreen(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states)
-:WindowState(window, mapStructures,states){
+GameModeScreen::GameModeScreen(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states, std::string name)
+:WindowState(window, mapStructures,states,name){
     this->initFonts();
     this->initButtons();
 }
@@ -37,8 +37,7 @@ void GameModeScreen::initKeybinds() {
  * @brief loads the font to the font attribute
  */
 void GameModeScreen::initFonts() {
-    if (!this->font.loadFromFile("../Resources/Fonts/arial.ttf"))
-    {
+    if (!this->font.loadFromFile("../Resources/Fonts/arial.ttf")){
         exit(200);
     }
 }
@@ -62,19 +61,19 @@ void GameModeScreen::updateButtons() {
     if (this->easyButton->isPressed()) {
         cout<<"easy";
         this->states->pop();
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states));
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states,this->playerInput));
     }
     this->mediumButton->update(this->positions.posXf, this->positions.posYf);
     if (this->mediumButton->isPressed()) {
         cout<<"medium";
         this->states->pop();
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states));
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, this->playerInput));
     }
     this->hardButton->update(this->positions.posXf, this->positions.posYf);
     if (this->hardButton->isPressed()) {
         cout<<"hard";
         this->states->pop();
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states));
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, this->playerInput));
     }
 }
 void GameModeScreen::renderButtons(sf::RenderTarget *target) {
