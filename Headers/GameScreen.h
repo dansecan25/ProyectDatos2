@@ -7,7 +7,7 @@
 #include "../Headers/WindowState.h"
 #include "SfmlButton.h"
 #include "EnemyManager.h"
-#include "../Source/EnemyList.h"
+#include "EnemyList.h"
 #include <iostream>
 #include <vector>
 #include <list>
@@ -18,23 +18,19 @@ class GameScreen
         : public WindowState{
 private:
     Entities player;
-    //EnemyManager enemy_manager;
+    void initKeybinds() override;
 
-    const int alienMaxSpeed = 1200;
-    const int alienMinSpeed = 500;
-    //clock for aliens
-    sf::Clock alienClock;
-    //alienClock.restart().asSeconds();
-    sf::Clock clock;
-    float deltaTime = clock.restart().asSeconds();
-    //EnemyShip alienArray[NUMBER_OF_ALIENS];
+    void makePattern(int);
 
-    int number_of_enemies;
+    EnemyList *enemyList = new EnemyList();
+    EnemyList *patternArray = new EnemyList();
+    void createEnemyList(int s);
+
     string level_sketch;
     int mode;
-    EnemyList *enemyList = new EnemyList();
+    int wave = 1;
+    int state;
 
-    void initKeybinds() override;
 public:
     explicit GameScreen(sf::RenderWindow *window, LinkedListStructured *mapStructures, gameStateStack *states, int i);
     ~GameScreen() override;

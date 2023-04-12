@@ -23,5 +23,5 @@ add_executable(ProyectDatos2 main.cpp Source/GameControls.cpp Headers/GameContro
         Source/Entities.cpp Headers/Entities.h
         Source/LInkedLIstFIlesSources/LinkedListStructured.cpp Headers/LInkedListFilesHeaders/LinkedListStructured.h
         Source/LInkedLIstFIlesSources/LinkedListStructured.cpp Source/MainScreen.cpp
-        Headers/MainScreen.h Source/GameModeScreen.cpp Headers/GameModeScreen.h Source/EnemyManager.cpp Headers/EnemyManager.h Source/EnemyManager.cpp Source/EnemyList.cpp Source/EnemyList.h)
+        Headers/MainScreen.h Source/GameModeScreen.cpp Headers/GameModeScreen.h Source/EnemyManager.cpp Headers/EnemyManager.h Source/EnemyManager.cpp Source/EnemyList.cpp Headers/EnemyList.h)
 target_link_libraries(ProyectDatos2 sfml-graphics sfml-window sfml-system)

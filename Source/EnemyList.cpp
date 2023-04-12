@@ -2,7 +2,7 @@
 // Created by monicaegm on 4/9/23.
 //
 
-#include "EnemyList.h"
+#include "../Headers/EnemyList.h"
 #include "../Headers/EnemyShip.h"
 using namespace std;
 
@@ -64,6 +64,22 @@ EnemyShip* EnemyList::getLast() {
     }
     return last;
 }
+int EnemyList::deleteEnemy(int id){
+    EnemyShip *find = getHead();
+    EnemyShip *before=NULL;
+    if(find->getId()==id){
+        setHead(getHead()->getNext());
+    } else {
+        while((find!=NULL) and (find->getId()!=id)){
+            before=find;
+            find=find->getNext();
+        }
+        if (find!=NULL){
+            before->editPointer(find->getNext());
+        }
+    }
+    delete find;
+}
 /**
  * Prints the enemy list with all of its enemies
  * @param n head of the list
@@ -75,4 +91,17 @@ void EnemyList::printList(EnemyShip *n){
         cout << "We have: " << n->getId() <<endl;
         this->printList(n->next);
     }
+}
+
+/**
+ * Returns the number of enemies in the list
+ */
+int EnemyList::lenEnemyList(EnemyShip *n){
+    int i = 0;
+    if (n != NULL)
+    {
+        i++;
+        this->lenEnemyList(n->next);
+    }
+    return i;
 }

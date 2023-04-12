@@ -11,66 +11,8 @@ GameScreen::GameScreen(sf::RenderWindow *window, LinkedListStructured *mapStruct
     this->initKeybinds();
 
     this->mode = mode;
-
-    if (mode == 1){
-        number_of_enemies = 15;
-    } else if (mode == 2){
-        number_of_enemies = 15;
-    } else if (mode == 3){
-        number_of_enemies = 20;
-    } else{
-        cout<< "Error with number of enemies \n";
-    }
-
-    EnemyShip *pattern = new EnemyShip();
-    this->level_sketch = pattern->makePattern(mode);
-    int i = 0;
-    int xpos = 750;
-    int ypos = 0;
-    for (char sketch_character : level_sketch) {
-        switch (sketch_character) {
-            case '\n': {
-                cout<<"no pattern";
-                ypos = 0;
-                xpos = xpos + 50;
-                break;
-            }
-            case '0': {
-                EnemyShip *enemy = new EnemyShip(i, 100, sketch_character);//alienMinSpeed + (rand()%alienMaxSpeed) );
-                enemy->setLocation(xpos, ypos*100+50);//enemy->getSprite().getGlobalBounds().height/2
-                enemyList->insertEnemy(enemy);
-                i++;
-                ypos++;
-                break;
-            }
-            case '1': {
-                EnemyShip *enemy = new EnemyShip(i, 100, sketch_character);//alienMinSpeed + (rand()%alienMaxSpeed) );
-                enemy->setLocation(xpos, ypos*100+50);//enemy->getSprite().getGlobalBounds().height/2
-                enemyList->insertEnemy(enemy);
-                i++;
-                ypos++;
-                break;
-            }
-            case '2': {
-                EnemyShip *enemy = new EnemyShip(i, 100, sketch_character);//alienMinSpeed + (rand()%alienMaxSpeed) );
-                enemy->setLocation(xpos, ypos*100+50);//enemy->getSprite().getGlobalBounds().height/2
-                enemyList->insertEnemy(enemy);
-                i++;
-                ypos++;
-                break;
-            }
-    }}
-
-    /*
-    for(int i=0; i<number_of_enemies; i++)
-    {
-        EnemyShip *enemy = new EnemyShip(i, 100, mode);//alienMinSpeed + (rand()%alienMaxSpeed) );
-        enemy->setLocation(enemy->getSprite().getGlobalBounds().height/2, i*100+50);
-        enemyList->insertEnemy(enemy);
-    }
-     */
-    cout<<"Print the enemy list\n";
-    enemyList->printList(enemyList->getHead());
+    makePattern(mode);
+    createEnemyList(wave);
 }
 
 GameScreen::~GameScreen() {
@@ -89,22 +31,23 @@ void GameScreen::updateInput(const float &dt) {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("Move_Down")))){
         this->player.move(dt, 0,2);
     }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("kill_all")))){
+        cout<<"killing enemies";
+        for (EnemyShip* enemy = enemyList->getHead();enemy != nullptr; enemy = enemy->getNext())
+        {
+            enemyList->deleteEnemy(enemy->getId());
+        }
+    }
 }
 void GameScreen::stateUpdate(const float& dt) {
     this->updateMousePosScreen();
     this->updateInput(dt);
     this->player.updateEntity(dt);
-    /*
-    sf::Time t = alienClock.getElapsedTime();
 
-    if(t.asSeconds() > 0.5)
-    {
-        for(size_t i=0; i<7; i++)
-        {
-            enemyList->findEnemy(i)->getSprite().move(0.f,enemyList->findEnemy(i)->getSpeed()*deltaTime);
-        }
-        alienClock.restart();
-    }*/
+    if (enemyList->lenEnemyList(enemyList->getHead()) == 0 && wave <= 5){
+        this->wave = wave+1;
+        createEnemyList(wave);
+    }
 }
 
 void GameScreen::stateRender(sf::RenderTarget * target) {
@@ -124,5 +67,131 @@ void GameScreen::initKeybinds() {
     this->keyBinds->insertNode("Move_Up",this->supportedKeys->getNode("W"));
     this->keyBinds->insertNode("Move_Down",this->supportedKeys->getNode("S"));
     this->keyBinds->insertNode("Quit",this->supportedKeys->getNode("Escape"));
+
+    this->keyBinds->insertNode("kill_all",this->supportedKeys->getNode("K"));
+
+}
+/**
+ * Creates a list with enemies and their data
+ * @param s int
+ */
+void GameScreen::createEnemyList(int s){
+    this->level_sketch = patternArray->findEnemy(s)->getPattern();
+    int i = 0;
+    int xpos = 750;
+    int ypos = 0;
+    for (char sketch_character : level_sketch) {
+        switch (sketch_character) {
+            case '\n': {
+                cout<<"no pattern";
+                ypos = 0;
+                xpos = xpos + 50;
+                break;
+            }
+            case '0': {
+                EnemyShip *enemy = new EnemyShip(i, 100, sketch_character);
+                enemy->setLocation(xpos, ypos*100+50);
+                enemyList->insertEnemy(enemy);
+                i++;
+                ypos++;
+                break;
+            }
+            case '1': {
+                EnemyShip *enemy = new EnemyShip(i, 100, sketch_character);
+                enemy->setLocation(xpos, ypos*100+50);
+                enemyList->insertEnemy(enemy);
+                i++;
+                ypos++;
+                break;
+            }
+            case '2': {
+                EnemyShip *enemy = new EnemyShip(i, 100, sketch_character);
+                enemy->setLocation(xpos, ypos*100+50);
+                enemyList->insertEnemy(enemy);
+                i++;
+                ypos++;
+                break;
+            }
+        }}
+    cout<<"Print the enemy list\n";
+    enemyList->printList(enemyList->getHead());
 }
 
+/**
+ * Sets the pattern of enemies to be drawn
+ * @param n number of wave for the pattern
+ * @return level_sketch char
+ */
+void GameScreen::makePattern(int n){ //pattern for showing enemies
+    switch (n){
+        case 1: {
+            EnemyShip *pattern1 = new EnemyShip(1);
+            pattern1->setPattern("000000\n000000\n000000");
+            patternArray->insertEnemy(pattern1);
+
+            EnemyShip *pattern2 = new EnemyShip(2);
+            pattern2->setPattern("000000\n000000\n101010");
+            patternArray->insertEnemy(pattern2);
+
+            EnemyShip *pattern3 = new EnemyShip(3);
+            pattern3->setPattern("000000\n101010\n101010");
+            patternArray->insertEnemy(pattern3);
+
+            EnemyShip *pattern4 = new EnemyShip(4);
+            pattern4->setPattern("000000\n101010\n111111");
+            patternArray->insertEnemy(pattern4);
+
+            EnemyShip *pattern5 = new EnemyShip(5);
+            pattern5->setPattern("101010\n110011\n111111");
+            patternArray->insertEnemy(pattern5);
+
+            break;
+        }
+        case 2: {
+            EnemyShip *pattern1 = new EnemyShip(1);
+            pattern1->setPattern("001100\n000000\n101010");
+            patternArray->insertEnemy(pattern1);
+
+            EnemyShip *pattern2 = new EnemyShip(2);
+            pattern2->setPattern("001100\n101010\n111111");
+            patternArray->insertEnemy(pattern2);
+
+            EnemyShip *pattern3 = new EnemyShip(3);
+            pattern3->setPattern("101010\n101010\n111111");
+            patternArray->insertEnemy(pattern3);
+
+            EnemyShip *pattern4 = new EnemyShip(4);
+            pattern4->setPattern("101010\n011110\n121212");
+            patternArray->insertEnemy(pattern4);
+
+            EnemyShip *pattern5 = new EnemyShip(5);
+            pattern5->setPattern("101010\n122221\n222222");
+            patternArray->insertEnemy(pattern5);
+
+            break;
+        }
+        case 3: {
+            EnemyShip *pattern1 = new EnemyShip(1);
+            pattern1->setPattern("101010\n101010\n212121");
+            patternArray->insertEnemy(pattern1);
+
+            EnemyShip *pattern2 = new EnemyShip(2);
+            pattern2->setPattern("101010\n111111\n212121");
+            patternArray->insertEnemy(pattern2);
+
+            EnemyShip *pattern3 = new EnemyShip(3);
+            pattern3->setPattern("111111\n121212\n211112");
+            patternArray->insertEnemy(pattern3);
+
+            EnemyShip *pattern4 = new EnemyShip(4);
+            pattern4->setPattern("111111\n122221\n222222");
+            patternArray->insertEnemy(pattern4);
+
+            EnemyShip *pattern5 = new EnemyShip(5);
+            pattern5->setPattern("121212\n222222\n222222");
+            patternArray->insertEnemy(pattern5);
+
+            break;
+        }
+    }
+}

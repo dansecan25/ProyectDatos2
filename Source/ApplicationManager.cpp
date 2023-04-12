@@ -113,6 +113,8 @@ void ApplicationManager::initKeys() {
     this->supportedKeys->insertNode("Escape",sf::Keyboard::Key::Escape);
     this->supportedKeys->insertNode("W",sf::Keyboard::Key::W);
     this->supportedKeys->insertNode("S",sf::Keyboard::Key::S);
+    this->supportedKeys->insertNode("K",sf::Keyboard::Key::K);
+
 }
 
 

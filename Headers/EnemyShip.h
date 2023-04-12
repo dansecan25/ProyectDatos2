@@ -17,6 +17,9 @@ public:
     //constructor sets ID number, loads sprite
     EnemyShip();
     EnemyShip(int id,float speed, char mode);
+
+    EnemyShip(int id);
+
     sf::Sprite & getSprite();
     void setLocation(float,float);
 
@@ -39,10 +42,11 @@ public:
     int resistance;
 
     string level_sketch;
+    string pattern;
 
-    basic_string<char> makePattern(int);
+    void setPattern(string p);
 
-
+    string getPattern();
 };
 
     /*

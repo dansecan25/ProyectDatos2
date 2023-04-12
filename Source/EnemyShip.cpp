@@ -56,7 +56,14 @@ EnemyShip::EnemyShip(int id,float speed,char type) {
             }
         }
     }
-
+/**
+ * Constructor with only an id
+ * @param id int
+ */
+EnemyShip::EnemyShip(int id){
+    next=NULL;
+    this->id = id;
+}
 /**
  * Returns the sprite for the enemy
  * @return sprite
@@ -127,105 +134,23 @@ int EnemyShip::getId() {
     return id;
 }
 /**
+ * Sets the patterns for enemies
+ * @param p
+ */
+void EnemyShip::setPattern(string p){
+    this->pattern = p;
+}
+/**
+ * Returns the pattern
+ * @return pattern
+ */
+string EnemyShip::getPattern(){
+    return pattern;
+}
+/**
  * Returns the next enemy
  * @return
  */
 EnemyShip* EnemyShip::getNext() {
     return next;
 }
-/**
- * Sets the pattern of enemies to be drawn
- * @param type
- */
-basic_string<char> EnemyShip::makePattern(int mode){
-    switch (mode){ //pattern for showing enemies
-
-        case 0: {
-            this->level_sketch = "0 0 0 0 0 0 0 0 \n 0 0 0 0 0 0 0 0\n0 0 0 0 0 0 0 0 \n 0 0 0 0 0 0 0 0";
-
-            break;
-        }
-        case 1: {
-            this->level_sketch = "000000\n000000\n000000";
-
-            break;
-        }
-        case 2: {
-            this->level_sketch = "101010\n010101\n101010";
-
-            break;
-        }
-        case 3: {
-            this->level_sketch = "001100\n002200\n112211";
-
-            break;
-        }
-        case 4: {
-            this->level_sketch = "2222222222222222\n1111111111111111\n1010101010101010\n0101010101010101";
-
-            break;
-        }
-        case 5: {
-            this->level_sketch = "0000000000000000\n2222222222222222\n1111111111111111\n1111111111111111";
-
-            break;
-        }
-        case 6: {
-            this->level_sketch = "2121212121212121\n1212121212121212\n2121212121212121\n1212121212121212";
-
-            break;
-        }
-        case 7: {
-            this->level_sketch = "2222222222222222\n2222222222222222\n2222222222222222\n2222222222222222";
-        }
-    }
-    return level_sketch;
-}
-/*
-unsigned char EnemyShip::get_hit_timer() const
-{
-    return hit_timer;
-}
-unsigned char EnemyShip::get_type() const
-{
-    return type;
-}
-
-unsigned short EnemyShip::get_x() const
-{
-    return x;
-}
-
-unsigned short EnemyShip::get_y() const
-{
-    return y;
-}
-void EnemyShip::move()
-{
-    if (0 != direction)
-    {
-        if ((1 == direction && x == SCREEN_WIDTH - 2 * BASE_SIZE) || (-1 == direction && x == BASE_SIZE))
-        {
-            //Once we reach the edge, we start moving down until we reach the next row.
-            direction = 0;
-
-            y += ENEMY_MOVE_SPEED;
-        }
-        else
-        {
-            //Moving horizontally.
-            x = std::clamp<short>(x + ENEMY_MOVE_SPEED * direction, BASE_SIZE, SCREEN_WIDTH - 2 * BASE_SIZE);
-        }
-    }
-    else
-    {
-        y = std::min<short>(y + ENEMY_MOVE_SPEED, BASE_SIZE * ceil(y / static_cast<float>(BASE_SIZE)));
-
-        if (y == BASE_SIZE * ceil(y / static_cast<float>(BASE_SIZE)))
-        {
-            //Moving in a snake pattern. We use the modulo operator to decide whether to move left or right.
-            direction = 0 == (y / BASE_SIZE) % 2 ? -1 : 1;
-        }
-    }
-}
- */

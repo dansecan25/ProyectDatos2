@@ -5,20 +5,22 @@
 #ifndef PROYECTDATOS2_ENEMYLIST_H
 #define PROYECTDATOS2_ENEMYLIST_H
 #include<iostream>
-#include "../Headers/EnemyShip.h"
+#include "EnemyShip.h"
 
 
 class EnemyList {
 public:
     EnemyList();
-    EnemyShip *findEnemy(int id);
     void setHead(EnemyShip *H);
     EnemyShip *getHead();
     EnemyShip *getLast();
 
-    void printList(EnemyShip *n);
-
     void insertEnemy(EnemyShip *enemy);
+    EnemyShip *findEnemy(int id);
+    int deleteEnemy(int d);
+
+    void printList(EnemyShip *n);
+    int lenEnemyList(EnemyShip *n);
 
 private:
     EnemyShip* head;
