@@ -4,10 +4,21 @@
 
 #include "../Headers/Player.h"
 
-Player::Player() {
-
+Player::Player(float x, float y, std::string playerTexture) {
+    this->initVariables();
+    this->initPlayerData();
+    this->giveTexture(playerTexture);
+    this->setPosition(x,y);
 }
 
 Player::~Player() {
+
+}
+
+void Player::initVariables() {
+
+}
+
+void Player::initPlayerData() {
 
 }

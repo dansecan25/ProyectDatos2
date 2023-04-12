@@ -13,23 +13,34 @@ using namespace std;
 class MainScreen
         :public WindowState{
 public:
-    MainScreen(sf::RenderWindow* window, LinkedListStructured* supportedKeys,gameStateStack* states);
+    MainScreen(sf::RenderWindow* window, LinkedListStructured* supportedKeys, WindowStatesStack* states);
     virtual ~MainScreen();
     SfmlButton * startButton;
     SfmlButton * exitButton;
+    SfmlButton * settingButton;
 
-    void endState();
-    void updateInput(const float& dt);
+    void updateInput(const float& dt) override;
     void updateButtons();
-    void renderButtons(sf::RenderTarget * target);
+    void renderButtons(sf::RenderTarget * target) const;
     void stateUpdate(const float& dt) override;
     void stateRender(sf::RenderTarget * target) override;
 private:
-    sf::RectangleShape backGround;
     sf::Font font;
+    sf::RectangleShape title;
+    sf::Texture titleTexture;
     void initFonts();
     void initButtons();
-    virtual void initKeybinds() override;
+    void initTitle();
+    void renderTitle(sf::RenderTarget *target);
+    void initKeybinds() override;
+
+
+
+
+
+
+
+
 };
 
 

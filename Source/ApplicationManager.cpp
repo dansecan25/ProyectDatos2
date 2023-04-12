@@ -5,11 +5,11 @@
 #include "../Headers/ApplicationManager.h"
 
 ApplicationManager::ApplicationManager() {
-    this->states=new gameStateStack();
+    this->states=new WindowStatesStack();
     this->supportedKeys=new LinkedListStructured();
-
     this->createWindow();
     this->initKeys();
+    this->initGeneralBackground();
     this->initWindowState();
 
 
@@ -45,8 +45,12 @@ void ApplicationManager::endApp() {
  * @brief initializes the main screen window
  */
 void ApplicationManager::createWindow() {
-    this->mainWindow = new sf::RenderWindow(VideoMode(1000, 626), "Battle Space Project", sf::Style::Titlebar | sf::Style::Close);
+    sf::ContextSettings windowSettings;
+    windowSettings.antialiasingLevel=0;
+    this->mainWindow = new sf::RenderWindow(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Battle Space Project", sf::Style::Titlebar | sf::Style::Close,windowSettings);
     this->mainWindow->setFramerateLimit(60);
+    this->mainWindow->setVerticalSyncEnabled(false);
+
 }
 /**
  * @brief updates the timer of execution, show the time every time its called
@@ -76,16 +80,13 @@ void ApplicationManager::update() {
  * @brief renders the images and objects into the window
  */
 void ApplicationManager::render() {
-    sf::Texture backgroundTexture;
-    backgroundTexture.loadFromFile("../Resources/Images/SpaceBackground.jpg");
-    sf::Sprite backgroundSprite(backgroundTexture);
-
+    //takes the state that will be rendered
     this->mainWindow->clear();
-    this->mainWindow->draw(backgroundSprite);
+    this->renderBackgroundGeneral();
     if(!this->states->isEmpty()){ //checks if the stack is not empty
         this->states->peek()->stateRender(this->mainWindow);
     }
-
+    //displays the content of the window
     this->mainWindow->display();
 }
 /**
@@ -115,6 +116,26 @@ void ApplicationManager::initKeys() {
     this->supportedKeys->insertNode("S",sf::Keyboard::Key::S);
     this->supportedKeys->insertNode("K",sf::Keyboard::Key::K);
 
+}
+/**
+ * @brief draws the background for all windows
+ */
+void ApplicationManager::renderBackgroundGeneral() {
+    this->mainWindow->draw(this->generalBackGround);
+//    sf::Texture backgroundTexture;
+//    backgroundTexture.loadFromFile("../Resources/Images/SpaceBackground.jpg");
+//    sf::Sprite backgroundSprite(backgroundTexture);
+//    this->mainWindow->draw(backgroundSprite);
+}
+/**
+ * @brief initiates the background texture and shape
+ */
+void ApplicationManager::initGeneralBackground() {
+    this->generalBackGround.setSize(sf::Vector2f(static_cast<float>(WINDOW_WIDTH),static_cast<float>(WINDOW_HEIGHT)));
+    if (!this->generalBackGroundTexture.loadFromFile("../Resources/Images/SpaceBackground.jpg")){
+        exit(50);
+    }
+    this->generalBackGround.setTexture(&this->generalBackGroundTexture);
 }
 
 

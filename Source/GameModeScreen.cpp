@@ -5,7 +5,7 @@
 #include "../Headers/GameModeScreen.h"
 #include "../Headers/GameScreen.h"
 
-GameModeScreen::GameModeScreen(sf::RenderWindow* window,LinkedListStructured* mapStructures,gameStateStack* states)
+GameModeScreen::GameModeScreen(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states)
 :WindowState(window, mapStructures,states){
     this->initFonts();
     this->initButtons();
@@ -16,12 +16,7 @@ GameModeScreen::~GameModeScreen() {
     delete this->mediumButton;
     delete this->hardButton;
 }
-
-void GameModeScreen::endState() {
-    cout<<"Goodbye suckers!"<<endl;
-}
 void GameModeScreen::updateInput(const float &dt) {
-    this->checkForQuit();
 
 }
 void GameModeScreen::stateUpdate(const float& dt) {
@@ -66,17 +61,20 @@ void GameModeScreen::updateButtons() {
     this->easyButton->update(this->positions.posXf, this->positions.posYf);
     if (this->easyButton->isPressed()) {
         cout<<"easy";
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 1));
+        this->states->pop();
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states));
     }
     this->mediumButton->update(this->positions.posXf, this->positions.posYf);
     if (this->mediumButton->isPressed()) {
         cout<<"medium";
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 2));
+        this->states->pop();
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states));
     }
     this->hardButton->update(this->positions.posXf, this->positions.posYf);
     if (this->hardButton->isPressed()) {
         cout<<"hard";
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 3));
+        this->states->pop();
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states));
     }
 }
 void GameModeScreen::renderButtons(sf::RenderTarget *target) {

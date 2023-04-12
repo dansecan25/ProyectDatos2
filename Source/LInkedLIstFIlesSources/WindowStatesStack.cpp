@@ -2,7 +2,7 @@
 // Created by dansecan on 27/03/23.
 //
 
-#include "../../Headers/LInkedListFilesHeaders/gameStateStack.h"
+#include "../../Headers/LInkedListFilesHeaders/WindowStatesStack.h"
 #include "../../Headers/WindowState.h"
 /**
  * @brief constructor for the node of the stack
@@ -42,7 +42,7 @@ StackNodeStates *StackNodeStates::getLink() {
 /**
  * @brief stack constructor
  */
-gameStateStack::gameStateStack() {
+WindowStatesStack::WindowStatesStack() {
     top = nullptr;
 
 }
@@ -50,7 +50,7 @@ gameStateStack::gameStateStack() {
  * @brief pushes an object into the stack
  * @param data
  */
-void gameStateStack::push(WindowState* data){
+void WindowStatesStack::push(WindowState* data){
     auto* temp = new StackNodeStates(data);
     temp->setData(data);
     temp->setLink(top);
@@ -63,7 +63,7 @@ void gameStateStack::push(WindowState* data){
  * @brief checks if the stack is empty or not
  * @return true if empty or false if not
  */
-bool gameStateStack::isEmpty() const{
+bool WindowStatesStack::isEmpty() const{
     return top == nullptr;
 }
 
@@ -71,7 +71,7 @@ bool gameStateStack::isEmpty() const{
  * @brief peeks the top element of the stack
  * @return WindowState pointer
  */
-WindowState* gameStateStack::peek(){
+WindowState* WindowStatesStack::peek(){
     if (!isEmpty())
         return top->getData();
     else return nullptr;
@@ -80,7 +80,7 @@ WindowState* gameStateStack::peek(){
 /**
  * @brief delete the top element of the stack
  */
-void gameStateStack::pop(){
+void WindowStatesStack::pop(){
     StackNodeStates* temp;
 
     if (top == nullptr) {
@@ -95,7 +95,7 @@ void gameStateStack::pop(){
 /**
  * @brief destructor for the stack
  */
-gameStateStack::~gameStateStack() {
+WindowStatesStack::~WindowStatesStack() {
     while(this->top!=nullptr){
         StackNodeStates* temp=this->top;
         this->top=temp->getLink();

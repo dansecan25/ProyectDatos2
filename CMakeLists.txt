@@ -18,8 +18,8 @@ add_executable(ProyectDatos2 main.cpp Source/GameControls.cpp Headers/GameContro
         Source/BulletCollector.cpp Headers/BulletCollector.h ImageLoader.cpp ImageLoader.h
         Source/SfmlButton.cpp Headers/SfmlButton.h
         Source/WindowState.cpp Headers/WindowState.h
-        Source/LInkedLIstFIlesSources/gameStateStack.cpp Headers/LInkedListFilesHeaders/gameStateStack.h
-        Source/LInkedLIstFIlesSources/sfmlTexturesList.cpp Headers/LInkedListFilesHeaders/sfmlTexturesList.h
+        Source/LInkedLIstFIlesSources/WindowStatesStack.cpp Headers/LInkedListFilesHeaders/WindowStatesStack.h
+        Source/LInkedLIstFIlesSources/texturesRoutes.cpp Headers/LInkedListFilesHeaders/texturesRoutes.h
         Source/Entities.cpp Headers/Entities.h
         Source/LInkedLIstFIlesSources/LinkedListStructured.cpp Headers/LInkedListFilesHeaders/LinkedListStructured.h
         Source/LInkedLIstFIlesSources/LinkedListStructured.cpp Source/MainScreen.cpp

@@ -8,31 +8,29 @@
  * @brief constructor of the window state manager class
  * @param window RednerWindow pointer
  * @param mapStructures LinkedListStructures pointer
- * @param states gameStateStack pointer
+ * @param states WindowStatesStack pointer
  */
-WindowState::WindowState(sf::RenderWindow* window, LinkedListStructured* mapStructures,gameStateStack* states) {
+WindowState::WindowState(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states) {
     this->keyBinds=new LinkedListStructured();
+    this->textures=new texturesRoutes();
     this->supportedKeys=mapStructures;
     this->window=window;
     this->positions= {0,0,0,0,0,0};
     this->states=states;
     this->quit=false;
 }
-
+/**
+ * @brief destructor of WindowState frees pointers memory
+ */
 WindowState::~WindowState() {
     while(keyBinds->getLen()>0){
         keyBinds->deleteLast();
     }
     delete keyBinds;
-}
-/**
- * @brief checks if the escape key is pressed to set the boolean as true
- */
-void WindowState::checkForQuit() {
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("Quit")))){ //when escape key is pressed, game closes
-        std::cout<<"Quitting"<<std::endl;
-        this->quit=true;
+    while(textures->getLen()>0){
+        textures->deleteLast();
     }
+    delete textures;
 }
 /**
  * @brief checks if the window has been called to quit
@@ -53,9 +51,9 @@ void WindowState::updateMousePosScreen() {
 
     this->positions.posXf=this->window->mapPixelToCoords(sf::Mouse::getPosition(*this->window)).x;
     this->positions.posYf=this->window->mapPixelToCoords(sf::Mouse::getPosition(*this->window)).y;
+}
 
-
-
-
+void WindowState::endState() {
+    this->quit=true;
 
 }

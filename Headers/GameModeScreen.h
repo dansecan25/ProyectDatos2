@@ -18,9 +18,8 @@ private:
     void initKeybinds() override;
 
 public:
-    explicit GameModeScreen(sf::RenderWindow * window,LinkedListStructured* mapStructures,gameStateStack* states);
+    explicit GameModeScreen(sf::RenderWindow * window, LinkedListStructured* mapStructures, WindowStatesStack* states);
     ~GameModeScreen() override;
-    void endState()override;
     void updateInput(const float& dt) override;
     void stateUpdate(const float& dt) override;
     void stateRender(sf::RenderTarget * target) override;
