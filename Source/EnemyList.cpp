@@ -11,11 +11,10 @@ using namespace std;
  */
 EnemyList::EnemyList() {
     head= nullptr;
-    //len=0;
 }
 /**
- * Inserts a new enemy in the enemy list
- * * @param enemy enemy node
+ * @brief Inserts a new enemy in the enemy list
+ * * @param enemy EnemyShip pointer
  */
 void EnemyList::insertEnemy(EnemyShip *enemy) {
     if (getHead() == NULL)
@@ -28,9 +27,9 @@ void EnemyList::insertEnemy(EnemyShip *enemy) {
     }
 }
 /**
- * Looks if a determined enemy exists in the list
- * @param id id of the enemy
- * @return enemy found
+ * @briefLooks if a determined enemy exists in the list
+ * @param id int
+ * @return find node
  */
 EnemyShip* EnemyList::findEnemy(int id){
     EnemyShip *find =  getHead();
@@ -40,22 +39,22 @@ EnemyShip* EnemyList::findEnemy(int id){
     return find;
 }
 /**
- * Sets the head of the list
- * @param H
+ * @briefSets the head of the list
+ * @param H EnemyShip pointer
  */
 void EnemyList::setHead(EnemyShip *H) {
     head = H;
 }
 /**
- * Returns the head of the list
- * @return head
+ * @brief Returns the head of the list
+ * @return head node
  */
 EnemyShip* EnemyList::getHead() {
     return head;
 }
 /**
- * Returns the last node of the enemy list
- * @return last
+ * @brief Returns the last node of the enemy list
+ * @return last node
  */
 EnemyShip* EnemyList::getLast() {
     EnemyShip *last = getHead();
@@ -64,6 +63,11 @@ EnemyShip* EnemyList::getLast() {
     }
     return last;
 }
+/**
+ * @brief Deletes enemies from the list
+ * @param id int
+ * @return deleted node
+ */
 int EnemyList::deleteEnemy(int id){
     EnemyShip *find = getHead();
     EnemyShip *before=NULL;
@@ -81,8 +85,8 @@ int EnemyList::deleteEnemy(int id){
     delete find;
 }
 /**
- * Prints the enemy list with all of its enemies
- * @param n head of the list
+ * @brief Prints the enemy list with all of its enemies
+ * @param n EnemyShip pointer
  */
 void EnemyList::printList(EnemyShip *n){
 
@@ -92,9 +96,10 @@ void EnemyList::printList(EnemyShip *n){
         this->printList(n->next);
     }
 }
-
 /**
- * Returns the number of enemies in the list
+ * Counts how many enemies there are
+ * @param n EnemyShip pointer
+ * @return i int
  */
 int EnemyList::lenEnemyList(EnemyShip *n){
     int i = 0;

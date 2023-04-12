@@ -14,7 +14,6 @@ using namespace std;
 
 class EnemyShip {
 public:
-    //constructor sets ID number, loads sprite
     EnemyShip();
     EnemyShip(int id,float speed, char mode);
 
@@ -48,37 +47,4 @@ public:
 
     string getPattern();
 };
-
-    /*
-    static constexpr unsigned short SCREEN_WIDTH = 320;
-    static constexpr unsigned char BASE_SIZE = 16;
-    static constexpr unsigned char ENEMY_MOVE_SPEED = 2;
-    char direction;
-    unsigned char hit_timer;
-    unsigned short x;
-    unsigned short y;
-    unsigned char type;
-
-    sf::Sprite enemy_sprite;
-    sf::Texture enemy_texture;
-
-public:
-    EnemyShip(unsigned char i_type, unsigned short i_x, unsigned short i_y);
-
-    unsigned char get_health() const;
-    unsigned char get_hit_timer() const;
-    unsigned char get_type() const;
-
-    unsigned short get_x() const;
-    unsigned short get_y() const;
-
-    void hit();
-    void move();
-    void update();
-
-    sf::IntRect get_hitbox() const;
-}; */
-
-
-
 #endif //PROYECTDATOS2_ENEMYSHIP_H

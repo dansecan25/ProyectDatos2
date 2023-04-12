@@ -11,6 +11,7 @@
  * @param window RenderWindow pointer
  * @param mapStructures LinkedListStructured pointer
  * @param states gameStatesStack pointer
+ * @param mode int
  */
 GameScreen::GameScreen(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states, int mode)
 :WindowState(window, mapStructures,states){
@@ -24,6 +25,9 @@ GameScreen::GameScreen(sf::RenderWindow* window, LinkedListStructured* mapStruct
     makePattern(mode);
     createEnemyList(wave);
 }
+/**
+ * @brief constructor to state GameScreen
+ */
 GameScreen::~GameScreen() {
     delete player;
 }
@@ -91,7 +95,7 @@ void GameScreen::initKeybinds() {
 
 }
 /**
- * Creates a list with enemies and their data
+ * @brief Creates a list with enemies and their data
  * @param s int
  */
 void GameScreen::createEnemyList(int s){
@@ -151,22 +155,27 @@ void GameScreen::initVariables() {
 
 
 }
-
+/**
+ * @brief inits the textures
+ */
 void GameScreen::initTextures() {
     this->textures->insertNode("PlayerTexture","../Resources/Images/SpaceShipPlayer.png");
 }
-
+/**
+ * @brief inits the player
+ */
 void GameScreen::initPlayer() {
     std::string route=this->textures->getNode("PlayerTexture");
     this->player=new Player(50, 310,route);
 }
 
 /**
- * Sets the pattern of enemies to be drawn
- * @param n number of wave for the pattern
+ * @brief Sets the pattern of enemies to be drawn
+ * @param n int
  * @return level_sketch char
  */
 void GameScreen::makePattern(int n){ //pattern for showing enemies
+    //Reference for enemy patterns https://github.com/Kofybrek/Space-invaders.git
     switch (n){
         case 1: {
             EnemyShip *pattern1 = new EnemyShip(1);
