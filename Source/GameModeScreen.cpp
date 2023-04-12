@@ -62,19 +62,19 @@ void GameModeScreen::updateButtons() {
     if (this->easyButton->isPressed()) {
         cout<<"easy";
         this->states->pop();
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states));
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 1));
     }
     this->mediumButton->update(this->positions.posXf, this->positions.posYf);
     if (this->mediumButton->isPressed()) {
         cout<<"medium";
         this->states->pop();
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states));
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 2));
     }
     this->hardButton->update(this->positions.posXf, this->positions.posYf);
     if (this->hardButton->isPressed()) {
         cout<<"hard";
         this->states->pop();
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states));
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 3));
     }
 }
 void GameModeScreen::renderButtons(sf::RenderTarget *target) {

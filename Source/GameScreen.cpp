@@ -6,21 +6,19 @@
 #include <iostream>
 #include <list>
 
-GameScreen::GameScreen(sf::RenderWindow *window, LinkedListStructured *mapStructures, gameStateStack *states, int mode)
 /**
  * @brief gamesScreen state constructor
  * @param window RenderWindow pointer
  * @param mapStructures LinkedListStructured pointer
  * @param states gameStatesStack pointer
  */
-GameScreen::GameScreen(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states)
+GameScreen::GameScreen(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states, int mode)
 :WindowState(window, mapStructures,states){
     this->initVariables();
     this->initObjects();
     this->initKeybinds();
     this->initTextures();
     this->initPlayer();
-
 
     this->mode = mode;
     makePattern(mode);
@@ -58,13 +56,12 @@ void GameScreen::updateInput(const float &dt) {
 void GameScreen::stateUpdate(const float& dt) {
     this->updateMousePosScreen();
     this->updateInput(dt);
-    this->player.updateEntity(dt);
+    this->player->updateEntity(dt);
 
     if (enemyList->lenEnemyList(enemyList->getHead()) == 0 && wave <= 5){
         this->wave = wave+1;
         createEnemyList(wave);
     }
-    this->player->updateEntity(dt);
 }
 /**
  * @brief states what will be drawn in the window
@@ -75,15 +72,12 @@ void GameScreen::stateRender(sf::RenderTarget * target) {
         target=this->window;
     }
     this->player->renderEntity(target);
-    this->player.renderEntity(this->window);
 
     for(size_t i=0;i<(level_sketch.length())-2;i++) {
         if(enemyList->findEnemy(i)->isAlive()) {
             enemyList->findEnemy(i)->draw(this->window);
         }
     }
-}
-
 }
 /**
  * @brief stores the accepted keys in the linked list
