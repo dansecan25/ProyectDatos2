@@ -38,7 +38,7 @@ private:
     void initTextures();
     void initPlayer();
 public:
-    explicit GameScreen(sf::RenderWindow * window, LinkedListStructured* mapStructures, WindowStatesStack* states, int mode);
+    explicit GameScreen(sf::RenderWindow * window, LinkedListStructured* mapStructures, WindowStatesStack* states, int mode, ArduinoManagement* arduino);
     ~GameScreen() override;
     void updateInput(const float& dt) override;
     void stateUpdate(const float& dt) override;

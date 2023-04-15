@@ -7,11 +7,11 @@
 ApplicationManager::ApplicationManager() {
     this->states=new WindowStatesStack();
     this->supportedKeys=new LinkedListStructured();
+    this->initArduino();
     this->createWindow();
     this->initKeys();
     this->initGeneralBackground();
     this->initWindowState();
-
 
 }
 /**
@@ -19,6 +19,7 @@ ApplicationManager::ApplicationManager() {
  */
 ApplicationManager::~ApplicationManager() {
     delete this->mainWindow;
+    delete this->arduinoControls;
     while(!this->states->isEmpty())
         this->states->pop(); //will go through every element from the stack and delete every one of them
     delete this->states;
@@ -27,6 +28,17 @@ ApplicationManager::~ApplicationManager() {
     }
     delete this->supportedKeys;
 }
+/**
+ * @brief initiates the arduino class
+ */
+void ApplicationManager::initArduino(){
+    try{
+        this->arduinoControls=new ArduinoManagement();
+    }catch(const std::exception& e){
+        exit(9000);
+    }
+}
+
 /**
  * @brief runs the window and executes the refresing of the screen
  */
@@ -104,7 +116,7 @@ void ApplicationManager::updateEvents() {
  * @brief pushes a WindowState object into the stack
  */
 void ApplicationManager::initWindowState() {
-    this->states->push(new MainScreen(this->mainWindow, this->supportedKeys,this->states));
+    this->states->push(new MainScreen(this->mainWindow, this->supportedKeys,this->states, this->arduinoControls));
 
 }
 /**

@@ -6,8 +6,8 @@
 #include "../Headers/MainScreen.h"
 #include "../Headers/GameModeScreen.h"
 
-MainScreen::MainScreen(sf::RenderWindow* window, LinkedListStructured* supportedKeys, WindowStatesStack* states)
-: WindowState(window,supportedKeys,states){
+MainScreen::MainScreen(sf::RenderWindow* window, LinkedListStructured* supportedKeys, WindowStatesStack* states,ArduinoManagement* arduino)
+: WindowState(window,supportedKeys,states,arduino){
     this->initFonts();
     this->initTitle();
     this->initKeybinds();
@@ -105,7 +105,7 @@ void MainScreen::updateButtons() {
     this->startButton->update(this->positions.posXf, this->positions.posYf);
     //here goes when start button is pressed
     if(this->startButton->isPressed()){
-        this->states->push(new GameModeScreen(this->window,this->supportedKeys,this->states));
+        this->states->push(new GameModeScreen(this->window,this->supportedKeys,this->states,this->arduinoControls));
     }
     this->exitButton->update(this->positions.posXf, this->positions.posYf);
     if(this->exitButton->isPressed()){

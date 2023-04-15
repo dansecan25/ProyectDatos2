@@ -4,16 +4,14 @@
 
 #ifndef PROYECTDATOS2_MAINSCREEN_H
 #define PROYECTDATOS2_MAINSCREEN_H
-#include "../Headers/WindowState.h"
 #include "../Headers/SfmlButton.h"
-#include "../Headers/GameScreen.h"
 #include "../Headers/GameModeScreen.h"
 
 using namespace std;
 class MainScreen
         :public WindowState{
 public:
-    MainScreen(sf::RenderWindow* window, LinkedListStructured* supportedKeys, WindowStatesStack* states);
+    MainScreen(sf::RenderWindow* window, LinkedListStructured* supportedKeys, WindowStatesStack* states, ArduinoManagement* arduino);
     virtual ~MainScreen();
     SfmlButton * startButton;
     SfmlButton * exitButton;

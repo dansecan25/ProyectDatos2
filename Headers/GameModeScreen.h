@@ -4,7 +4,7 @@
 
 #ifndef PROYECTDATOS2_GAMEMODESCREEN_H
 #define PROYECTDATOS2_GAMEMODESCREEN_H
-#include "../Headers/WindowState.h"
+#include "../Headers/GameScreen.h"
 #include "SfmlButton.h"
 #include <iostream>
 using namespace std;
@@ -18,7 +18,7 @@ private:
     void initKeybinds() override;
 
 public:
-    explicit GameModeScreen(sf::RenderWindow * window, LinkedListStructured* mapStructures, WindowStatesStack* states);
+    explicit GameModeScreen(sf::RenderWindow * window, LinkedListStructured* mapStructures, WindowStatesStack* states,ArduinoManagement* arduino);
     ~GameModeScreen() override;
     void updateInput(const float& dt) override;
     void stateUpdate(const float& dt) override;

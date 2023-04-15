@@ -68,7 +68,7 @@ EnemyShip* EnemyList::getLast() {
  * @param id int
  * @return deleted node
  */
-int EnemyList::deleteEnemy(int id){
+void EnemyList::deleteEnemy(int id){
     EnemyShip *find = getHead();
     EnemyShip *before=NULL;
     if(find->getId()==id){

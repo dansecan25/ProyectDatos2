@@ -11,8 +11,8 @@
  * @param mapStructures LinkedListStructured pointer
  * @param states gameStatesStack pointer
  */
-GameModeScreen::GameModeScreen(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states)
-:WindowState(window, mapStructures,states){
+GameModeScreen::GameModeScreen(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states,ArduinoManagement* arduino)
+:WindowState(window, mapStructures,states, arduino){
     this->initFonts();
     this->initButtons();
 }
@@ -88,17 +88,17 @@ void GameModeScreen::updateButtons() {
     this->easyButton->update(this->positions.posXf, this->positions.posYf);
     if (this->easyButton->isPressed()) {
         this->states->pop();
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 1));
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 1,this->arduinoControls));
     }
     this->mediumButton->update(this->positions.posXf, this->positions.posYf);
     if (this->mediumButton->isPressed()) {
         this->states->pop();
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 2));
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 2, this->arduinoControls));
     }
     this->hardButton->update(this->positions.posXf, this->positions.posYf);
     if (this->hardButton->isPressed()) {
         this->states->pop();
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 3));
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 3,this->arduinoControls));
     }
 }
 /**

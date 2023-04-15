@@ -13,8 +13,8 @@
  * @param states gameStatesStack pointer
  * @param mode int
  */
-GameScreen::GameScreen(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states, int mode)
-:WindowState(window, mapStructures,states){
+GameScreen::GameScreen(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states, int mode, ArduinoManagement* arduino)
+:WindowState(window, mapStructures,states, arduino){
     this->initVariables();
     this->initObjects();
     this->initKeybinds();
@@ -36,6 +36,7 @@ GameScreen::~GameScreen() {
  * @param dt const float reference
  */
 void GameScreen::updateInput(const float &dt) {
+
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("Move_Up")))){
         this->player->move(dt, 0,-2);
     }

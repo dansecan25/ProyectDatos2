@@ -18,7 +18,7 @@ private:
     sf::Event sfEvent;
     sf::RectangleShape generalBackGround;
     sf::Texture generalBackGroundTexture;
-
+    ArduinoManagement* arduinoControls;
     sf::Clock dtClock;
     float dt;
     WindowStatesStack* states;
@@ -28,6 +28,7 @@ private:
     void initKeys();
     void renderBackgroundGeneral();
     void initGeneralBackground();
+    void initArduino();
 
 public:
     ApplicationManager();

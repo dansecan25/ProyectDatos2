@@ -10,9 +10,10 @@
  * @param mapStructures LinkedListStructures pointer
  * @param states WindowStatesStack pointer
  */
-WindowState::WindowState(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states) {
+WindowState::WindowState(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states,ArduinoManagement* arduino) {
     this->keyBinds=new LinkedListStructured();
     this->textures=new texturesRoutes();
+    this->arduinoControls=arduino;
     this->supportedKeys=mapStructures;
     this->window=window;
     this->positions= {0,0,0,0,0,0};

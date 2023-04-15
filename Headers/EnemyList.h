@@ -17,7 +17,7 @@ public:
 
     void insertEnemy(EnemyShip *enemy);
     EnemyShip *findEnemy(int id);
-    int deleteEnemy(int d);
+    void deleteEnemy(int d);
 
     void printList(EnemyShip *n);
     int lenEnemyList(EnemyShip *n);

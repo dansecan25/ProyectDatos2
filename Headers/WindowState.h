@@ -5,6 +5,7 @@
 #ifndef PROYECTDATOS2_WINDOWSTATE_H
 #define PROYECTDATOS2_WINDOWSTATE_H
 #include "../Headers/Player.h"
+#include "../Headers/ArduinoManagement.h"
 #include "../Headers/LInkedListFilesHeaders/LinkedListStructured.h"
 #include "../Headers/LInkedListFilesHeaders/WindowStatesStack.h"
 #include "../Headers/LInkedListFilesHeaders/texturesRoutes.h"
@@ -24,10 +25,11 @@ protected:
     LinkedListStructured* supportedKeys;
     LinkedListStructured* keyBinds;
     texturesRoutes* textures;
+    ArduinoManagement* arduinoControls;
     bool quit;
     virtual void initKeybinds()=0;
 public:
-    WindowState(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states);
+    WindowState(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states,ArduinoManagement* arduino);
     virtual ~WindowState();
     [[nodiscard]] const bool& getQuit() const;
     virtual void updateInput(const float& dt)=0;
