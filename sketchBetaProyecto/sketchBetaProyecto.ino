@@ -16,7 +16,7 @@ String inputStringBuzzSignal = "";         // a String to hold incoming data
 bool stringCompleteBuzzSignal = false;  // whether the string is complete
 
 void setup() {
-
+    int two=2;
   byte numDigits = 1;
   //defines common pins while using multi-digit display. Left for single digit display
   byte digitPins[] = {};
