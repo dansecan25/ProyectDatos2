@@ -18,21 +18,12 @@ public:
     virtual void updateEntity(const float& dt);
     virtual void renderEntity(sf::RenderTarget* target);
     virtual void setPosition(const float x, const float y);
+    sf::Vector2<float> getPosition();
 
 protected:
     sf::Sprite* sprite;
     sf::Texture* spriteTexture;
     float movementSpeed;
-
-
-
-
-
-
-
-
-
-
 };
 
 

@@ -8,6 +8,7 @@
 #include "SfmlButton.h"
 #include "EnemyManager.h"
 #include "EnemyList.h"
+#include "BulletCollector.h"
 #include <iostream>
 #include <vector>
 #include <list>
@@ -28,12 +29,16 @@ private:
 
     EnemyList *enemyList = new EnemyList();
     EnemyList *patternArray = new EnemyList();
+    BulletCollector *bulletcollector = new BulletCollector();
     void createEnemyList(int s);
 
     string level_sketch;
     int mode;
     int wave = 1;
-    int state;
+    int bulletNum;
+    int bulletRes;
+
+    sf::Clock clock;
 
     void initTextures();
     void initPlayer();
@@ -45,13 +50,7 @@ public:
     void stateRender(sf::RenderTarget * target) override;
 
 
-
-
-
-
-
-
-
+    void sleepgame();
 };
 
 

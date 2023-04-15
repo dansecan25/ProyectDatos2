@@ -6,8 +6,25 @@
 #define PROYECTDATOS2_BULLETCOLLECTOR_H
 
 
+#include "Bullet.h"
+
 class BulletCollector {
 
+public:
+    Bullet * head;
+    BulletCollector();
+
+    void addBullet(int id, int imp, float sp);
+    void printCollector(Bullet *n);
+    void setHead(Bullet *H);
+
+    Bullet *getHead();
+
+    Bullet *getLast();
+
+    Bullet *findBullet(int data);
+
+    void deleteBullet(int data);
 };
 
 

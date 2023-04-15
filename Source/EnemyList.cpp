@@ -6,6 +6,7 @@
 #include "../Headers/EnemyShip.h"
 using namespace std;
 
+
 /**
  * @brief constructor of the list of enemies
  */

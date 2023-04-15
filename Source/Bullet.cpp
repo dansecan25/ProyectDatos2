@@ -2,47 +2,86 @@
 // Created by dansecan on 11/03/23.
 //
 
-#include <cmath>
+#include <cstring>
 #include "../Headers/Bullet.h"
 
-Bullet::Bullet(float i_step_x, float i_step_y, short i_x, short i_y)
-:dead(0),
- real_x(i_x),
- real_y(i_y),
- step_x(i_step_x),
- step_y(i_step_y),
- x(i_x),
- y(i_y)
-{
-    previous_x.fill(x);
-    previous_y.fill(y);
+/**
+ * @brief constructor to create a bullet
+ */
+Bullet::Bullet() {
+    id = 0;
+    impact = 0;
+    speed = 0;
+    next = NULL;
+
 }
-Bullet::Bullet(){
-
-};
-
-void Bullet::update(){
-    if (0 == dead)
-    {
-        //I hate using floats, so we'll change real_x and _y and work only with integer values.
-        real_x += step_x;
-        real_y += step_y;
-
-        for (unsigned char a = 0; a < previous_x.size() - 1; a++)
-        {
-            previous_x[a] = previous_x[1 + a];
-            previous_y[a] = previous_y[1 + a];
-        }
-
-        previous_x[previous_x.size() - 1] = x;
-        previous_y[previous_y.size() - 1] = y;
-
-        x = round(real_x);
-        y = round(real_y);
-
-        if (x <= -BASE_SIZE || y <= -BASE_SIZE || SCREEN_HEIGHT <= y || SCREEN_WIDTH <= x)
-        {
-            dead = 1;
-        }
-    }
+/**
+ * @brief Constructor to create a bullet with defined impact
+ * @param int imp
+ */
+Bullet::Bullet(int id,int imp,float sp){
+    this->id = id;
+    this->impact = imp;
+    this->speed = sp;
+    this->next=NULL;
 }
+
+/**
+ * @brief Edits the bullets impact
+ * @param imp int
+ */
+void Bullet::editBullet(int imp) {
+    this->impact = imp;
+}
+/**
+ * @brief edits the bullet next pointer
+ * @param newNext Bullet pointer
+ */
+void Bullet::editBulletPointer(Bullet *newNext) {
+    this->next = newNext;
+}
+/**
+ * @brief returns the bullets impact
+ * @return
+ */
+int Bullet::getImpact() {
+    return impact;
+}
+/**
+ * @brief Returns the next bullet pointer
+ * @return
+ */
+Bullet* Bullet::getNext() {
+    return next;
+}
+
+Bullet* Bullet::moveBullet(sf::Vector2f pos){
+    this->direction = pos;
+    shape.move(direction * speed);
+}
+void Bullet::draw(sf::RenderTarget * target){
+    shape.setRadius(5);
+    target->draw(shape);
+}
+/**
+ * @brief Overloads new operator to asign recycled memory
+ * @param size
+ * @return
+ */
+ /*
+void* Bullet::operator new(size_t size){
+    return Collector::getInstance()->asignMemory(size);
+    //check if in  collector there is a recycled pointer that it can use to recyle a memory space to use or use the
+    //global new operator to assign memory
+}
+  */
+/**
+ * @brief overloades delete operator to recyle memory
+ * @param nodeToDelete
+ */
+ /*
+void Bullet::operator delete(void* nodeToDelete){
+    //add the pointer to the collector list
+    Collector::getInstance()->recycleMemory(nodeToDelete);
+}
+*/
