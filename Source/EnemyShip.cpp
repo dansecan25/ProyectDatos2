@@ -11,26 +11,22 @@
 using namespace std;
 
 /**
- * constructor to create an enemy
+ * @brief constructor to create an enemy
  */
 EnemyShip::EnemyShip() {
-    this->speed = 0;
     this->id = 0;
 }
 /**
- * constructor to create an enemy with an id and its speed
+ * @brief constructor to create an enemy with an id and its type
  */
-EnemyShip::EnemyShip(int id,float speed,char type) {
+EnemyShip::EnemyShip(int id,char type, int res) {
     next=NULL;
-
+    this->resistance = res;
     this->alive = true;
     this->id = id;
-    this->speed = speed;
 
-    cout<<" \n type \n"<< type;
         switch (type) {
             case '\n': {
-                cout<<" no pattern ";
                 break;
             }
             case '0': {
@@ -57,7 +53,7 @@ EnemyShip::EnemyShip(int id,float speed,char type) {
         }
     }
 /**
- * Constructor with only an id
+ * @brief Constructor with only an id
  * @param id int
  */
 EnemyShip::EnemyShip(int id){
@@ -65,46 +61,46 @@ EnemyShip::EnemyShip(int id){
     this->id = id;
 }
 /**
- * Returns the sprite for the enemy
+ * @brief Returns the sprite for the enemy
  * @return sprite
  */
 sf::Sprite & EnemyShip::getSprite(){
     return sprite;
 }
 /**
- * Defines the resistance for the enemies
+ * @brief Defines the resistance for the enemies
  * @param resistance int
  */
 void EnemyShip::setResistance(int resistance){
     this->resistance = resistance;
 }
 /**
- * Sets the coordenates for each enemy
- * @param xpos
- * @param ypos
+ * @brief Sets the coordenates for each enemy
+ * @param xpos float
+ * @param ypos float
  */
 void EnemyShip::setLocation(float xpos, float ypos)
 {
     sprite.setPosition(xpos,ypos);
 }
 /**
- * Defines if an enemy is killed
+ * @brief Defines if an enemy is killed
  */
 void EnemyShip::kill()
 {
     this->alive = false;
 }
 /**
- * Defines that the enemy is alive
- * @return
+ * @brief Defines that the enemy is alive
+ * @return boolean alive
  */
 bool EnemyShip::isAlive()
 {
     return alive;
 }
 /**
- * Sets the enemy in the screen
- * @param target
+ * @brief sets the enemy in the screen
+ * @param target RenderTarget pointer
  */
 void EnemyShip::draw(sf::RenderTarget * target)
 {
@@ -112,44 +108,36 @@ void EnemyShip::draw(sf::RenderTarget * target)
     target->draw(sprite);
 }
 /**
- * Returns the speed of the enemy
- * @return
- */
-float EnemyShip::getSpeed() const
-{
-    return speed;
-}
-/**
- * edits the node's next pointer
- * @param newNext
+ * @brief edits the node's next pointer
+ * @param newNext EnemyShip pointer
  */
 void EnemyShip::editPointer(EnemyShip *newNext) {
     this->next=newNext;
 }
 /**
- * returns the enemies id
- * @return
+ * @brief returns the enemies id
+ * @return id int
  */
 int EnemyShip::getId() {
     return id;
 }
 /**
- * Sets the patterns for enemies
- * @param p
+ * @brief Sets the patterns for enemies
+ * @param p string
  */
 void EnemyShip::setPattern(string p){
     this->pattern = p;
 }
 /**
- * Returns the pattern
+ * @brief Returns the pattern
  * @return pattern
  */
 string EnemyShip::getPattern(){
     return pattern;
 }
 /**
- * Returns the next enemy
- * @return
+ * @brief Returns the next enemy
+ * @return next
  */
 EnemyShip* EnemyShip::getNext() {
     return next;

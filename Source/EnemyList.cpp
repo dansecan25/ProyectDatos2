@@ -6,6 +6,7 @@
 #include "../Headers/EnemyShip.h"
 using namespace std;
 
+
 /**
  * @brief constructor of the list of enemies
  */
@@ -27,7 +28,7 @@ void EnemyList::insertEnemy(EnemyShip *enemy) {
     }
 }
 /**
- * @briefLooks if a determined enemy exists in the list
+ * @brief Looks if a determined enemy exists in the list
  * @param id int
  * @return find node
  */
@@ -103,10 +104,9 @@ void EnemyList::printList(EnemyShip *n){
  */
 int EnemyList::lenEnemyList(EnemyShip *n){
     int i = 0;
-    if (n != NULL)
-    {
+    while(n->getNext()!=NULL){
+        n = n->getNext();
         i++;
-        this->lenEnemyList(n->next);
     }
     return i;
 }

@@ -6,8 +6,8 @@
 #define PROYECTDATOS2_GAMESCREEN_H
 #include "../Headers/WindowState.h"
 #include "SfmlButton.h"
-#include "EnemyManager.h"
 #include "EnemyList.h"
+#include "BulletCollector.h"
 #include <iostream>
 #include <vector>
 #include <list>
@@ -29,12 +29,22 @@ private:
 
     EnemyList *enemyList = new EnemyList();
     EnemyList *patternArray = new EnemyList();
+    BulletCollector *bulletOriginal = new BulletCollector();
     void createEnemyList(int s);
 
     string level_sketch;
     int mode;
     int wave = 1;
-    int state;
+    int bulletNum;
+    int bulletBackup;
+    int resistance;
+    int speed;
+
+    sf::Clock clock;
+    sf::Clock bulletClock;
+    sf::Clock enemyClock;
+    sf::Clock bulletClock2;
+
 
     void initTextures();
     void initPlayer();
@@ -45,14 +55,7 @@ public:
     void stateUpdate(const float& dt) override;
     void stateRender(sf::RenderTarget * target) override;
 
-
-
-
-
-
-
-
-
+    void GameOver();
 };
 
 

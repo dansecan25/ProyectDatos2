@@ -7,30 +7,36 @@
 
 
 #include <array>
+#include <SFML/Graphics.hpp>
 
 class Bullet {
     Bullet();
-    static constexpr unsigned char BASE_SIZE = 16;
-    static constexpr unsigned short SCREEN_HEIGHT = 180;
-    static constexpr unsigned short SCREEN_WIDTH = 320;
 
-    bool dead;
+private:
+    Bullet* next;
 
-    float real_x;
-    float real_y;
-    float step_x;
-    float step_y;
+public:
+    int impact;
+    int id;
 
-    short x;
-    short y;
+    sf::Sprite sprite;
+    sf::Texture texture;
 
-    //We also use this struct in the Player class. But the player's bullets don't have a tail. So it may seem a bit redundant. But I'm too lazy to fix it.
-    std::array<short, 3> previous_x;
-    std::array<short, 3> previous_y;
-    Bullet(float i_step_x, float i_step_y, short i_x, short i_y);
+    Bullet(int id,int imp);
 
-    void update();
+    Bullet *getNext();
+    void editBullet(int imp);
+    void editBulletPointer(Bullet *newNext);
+    int getImpact();
+
+    //void* operator new(size_t size);
+    //void operator delete(void*);
+    void setPosition( float x, float y);
+    void draw(sf::RenderTarget * target);
+
+    sf::Sprite &getSprite();
+    int getId();
+    sf::Vector2<float> getPosition();
 };
-
 
 #endif //PROYECTDATOS2_BULLET_H

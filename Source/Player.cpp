@@ -9,6 +9,7 @@ Player::Player(float x, float y, std::string playerTexture) {
     this->initPlayerData();
     this->giveTexture(playerTexture);
     this->setPosition(x,y);
+    this->getPosition();
 }
 
 Player::~Player() {

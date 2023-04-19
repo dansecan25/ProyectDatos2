@@ -61,3 +61,7 @@ void Entities::setPosition(const float x, const float y) {
         this->sprite->setPosition(x,y);
     }
 }
+
+sf::Vector2<float> Entities::getPosition(){
+    return sprite->getPosition();
+}

@@ -15,7 +15,7 @@ using namespace std;
 class EnemyShip {
 public:
     EnemyShip();
-    EnemyShip(int id,float speed, char mode);
+    EnemyShip(int id, char mode, int resistance);
 
     EnemyShip(int id);
 
@@ -36,7 +36,6 @@ public:
     sf::Sprite sprite;
     sf::Texture texture;
     bool alive;
-    float speed;
     int id;
     int resistance;
 
