@@ -10,8 +10,8 @@
  * @param mapStructures LinkedListStructured pointer
  * @param states gameStatesStack pointer
  */
-GameOverScreen::GameOverScreen(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states)
-        :WindowState(window, mapStructures,states){
+GameOverScreen::GameOverScreen(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states,ArduinoManagement* arduino)
+        :WindowState(window, mapStructures,states,arduino){
     this->initFonts();
 
 }

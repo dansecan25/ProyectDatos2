@@ -11,7 +11,7 @@
 
 class GameOverScreen : public WindowState{
 public:
-    explicit GameOverScreen(sf::RenderWindow * window, LinkedListStructured* mapStructures, WindowStatesStack* states);
+    explicit GameOverScreen(sf::RenderWindow * window, LinkedListStructured* mapStructures, WindowStatesStack* states,ArduinoManagement* arduino);
     ~GameOverScreen() override;
     void updateInput(const float& dt) override;
     void stateUpdate(const float& dt) override;

@@ -31,11 +31,11 @@ GameScreen::GameScreen(sf::RenderWindow* window, LinkedListStructured* mapStruct
     makePattern(mode);
     createEnemyList(wave);
     this->arduinoControls->sendWindowState("Game\n");
-}
-
     bulletClock.restart().asSeconds();
     enemyClock.restart().asSeconds();
-    }
+}
+
+
 /**
  * @brief constructor to state GameScreen
  */
@@ -353,6 +353,6 @@ void GameScreen::makePattern(int n){ //pattern for showing enemies
     }
 }
 void GameScreen::GameOver(){
-    this->states->push(new GameOverScreen(this->window, this->supportedKeys, this->states));
+    this->states->push(new GameOverScreen(this->window, this->supportedKeys, this->states,this->arduinoControls));
 
 }
