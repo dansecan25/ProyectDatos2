@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <poder>
-    <name>DEATHRAY</name>
-    <cooldown>20</cooldown>
+    <name>INVINCIBLE</name>
+    <cooldown>30</cooldown>
     <cost>UNDEFINED</cost>
 </poder>

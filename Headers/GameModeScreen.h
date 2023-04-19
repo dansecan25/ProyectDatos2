@@ -15,7 +15,9 @@ private:
     SfmlButton * easyButton;
     SfmlButton * mediumButton;
     SfmlButton * hardButton;
+    sf::Text textPotentiometer;
     void initKeybinds() override;
+    void renderBulletSpeed();
 
 public:
     explicit GameModeScreen(sf::RenderWindow * window, LinkedListStructured* mapStructures, WindowStatesStack* states,ArduinoManagement* arduino);
@@ -29,6 +31,7 @@ public:
     void initFonts();
     void renderButtons(sf::RenderTarget *target);
     void updateButtons();
+
 };
 
 

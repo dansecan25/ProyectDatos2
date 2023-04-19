@@ -18,10 +18,12 @@ public:
     void sendWindowState(std::string state);
     void sendWave(int wave);
     void sendPass(std::string passed);
+
 private:
     std::string port = "/dev/ttyACM0";
     int baudRate=3600;
     serial::Serial mySerial;
+
 
 };
 

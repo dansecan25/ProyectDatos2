@@ -15,6 +15,7 @@ GameModeScreen::GameModeScreen(sf::RenderWindow* window, LinkedListStructured* m
 :WindowState(window, mapStructures,states, arduino){
     this->initFonts();
     this->initButtons();
+    this->arduinoControls->sendWindowState("Settings\n");
 }
 /**
  * @brief GameModeScreen constructor
@@ -39,6 +40,13 @@ void GameModeScreen::stateUpdate(const float& dt) {
     this->updateMousePosScreen();
     this->updateInput(dt);
     this->updateButtons();
+    static sf::Clock inputClock;
+    if (inputClock.getElapsedTime().asSeconds() > 0.5f) {
+        // Reset the clock
+        inputClock.restart();
+        std::string valuePotence = to_string(this->arduinoControls->getPotentiometerValue());
+        textPotentiometer.setString(valuePotence);
+    }
 }
 /**
  * @brief states what will be drawn in the window
@@ -48,6 +56,8 @@ void GameModeScreen::stateRender(sf::RenderTarget * target) {
     if(!target){
         target=this->window;
     }
+    this->renderBulletSpeed();
+
     this->renderButtons(target);
 }
 /**
@@ -86,19 +96,23 @@ void GameModeScreen::initButtons() {
  */
 void GameModeScreen::updateButtons() {
     this->easyButton->update(this->positions.posXf, this->positions.posYf);
+    Strategies* strat= new Strategies();
     if (this->easyButton->isPressed()) {
         this->states->pop();
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 1,this->arduinoControls));
+        this->arduinoControls->sendWindowState("DoneSettings\n");
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 1,this->arduinoControls,strat));
     }
     this->mediumButton->update(this->positions.posXf, this->positions.posYf);
     if (this->mediumButton->isPressed()) {
         this->states->pop();
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 2, this->arduinoControls));
+        this->arduinoControls->sendWindowState("DoneSettings\n");
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 2, this->arduinoControls,strat));
     }
     this->hardButton->update(this->positions.posXf, this->positions.posYf);
     if (this->hardButton->isPressed()) {
         this->states->pop();
-        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 3,this->arduinoControls));
+        this->arduinoControls->sendWindowState("DoneSettings\n");
+        this->states->push(new GameScreen(this->window, this->supportedKeys, this->states, 3,this->arduinoControls,strat));
     }
 }
 /**
@@ -109,4 +123,21 @@ void GameModeScreen::renderButtons(sf::RenderTarget *target) {
     this->easyButton->render(target);
     this->mediumButton->render(target);
     this->hardButton->render(target);
+}
+/**
+ * @brief draws texts in the window
+ */
+void GameModeScreen::renderBulletSpeed() {
+    textPotentiometer.setPosition(790,170);
+    textPotentiometer.setFont(this->font);
+    textPotentiometer.setCharacterSize(30);
+    textPotentiometer.setFillColor(sf::Color::White);
+    sf::Text potenceText;
+    potenceText.setPosition(750,140);
+    potenceText.setFont(this->font);
+    potenceText.setCharacterSize(30);
+    potenceText.setFillColor(sf::Color::White);
+    potenceText.setString("Potence Value");
+    this->window->draw(textPotentiometer);
+    this->window->draw(potenceText);
 }

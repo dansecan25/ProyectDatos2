@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <poder>
-    <name>DEATHRAY</name>
-    <cooldown>20</cooldown>
+    <name>FLASHSTEP</name>
+    <cooldown>5</cooldown>
     <cost>UNDEFINED</cost>
 </poder>

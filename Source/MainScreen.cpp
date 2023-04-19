@@ -12,6 +12,7 @@ MainScreen::MainScreen(sf::RenderWindow* window, LinkedListStructured* supported
     this->initTitle();
     this->initKeybinds();
     this->initButtons();
+    this->arduinoControls->sendWindowState("Main\n");
 
 }
 
@@ -25,10 +26,17 @@ MainScreen::~MainScreen() {
  */
 void MainScreen::updateInput(const float &dt) {
 }
+/**
+ * @brief initiates the keyBinds list
+ */
 void MainScreen::initKeybinds() {
     this->keyBinds->insertNode("Move_Up",this->supportedKeys->getNode("W"));
     this->keyBinds->insertNode("Move_Down",this->supportedKeys->getNode("S"));
     this->keyBinds->insertNode("Quit",this->supportedKeys->getNode("Escape"));
+    this->keyBinds->insertNode("Deathray",this->supportedKeys->getNode("E"));
+    this->keyBinds->insertNode("FlashStep",this->supportedKeys->getNode("R"));
+    this->keyBinds->insertNode("Invincible",this->supportedKeys->getNode("T"));
+    this->keyBinds->insertNode("Fireball",this->supportedKeys->getNode("Y"));
 }
 /**
  * @brief states what should be updated by the current window state

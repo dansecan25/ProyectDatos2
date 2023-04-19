@@ -127,6 +127,10 @@ void ApplicationManager::initKeys() {
     this->supportedKeys->insertNode("W",sf::Keyboard::Key::W);
     this->supportedKeys->insertNode("S",sf::Keyboard::Key::S);
     this->supportedKeys->insertNode("K",sf::Keyboard::Key::K);
+    this->supportedKeys->insertNode("E",sf::Keyboard::Key::E);
+    this->supportedKeys->insertNode("R",sf::Keyboard::Key::R);
+    this->supportedKeys->insertNode("T",sf::Keyboard::Key::T);
+    this->supportedKeys->insertNode("Y",sf::Keyboard::Key::Y);
 
 }
 /**
@@ -134,10 +138,6 @@ void ApplicationManager::initKeys() {
  */
 void ApplicationManager::renderBackgroundGeneral() {
     this->mainWindow->draw(this->generalBackGround);
-//    sf::Texture backgroundTexture;
-//    backgroundTexture.loadFromFile("../Resources/Images/SpaceBackground.jpg");
-//    sf::Sprite backgroundSprite(backgroundTexture);
-//    this->mainWindow->draw(backgroundSprite);
 }
 /**
  * @brief initiates the background texture and shape

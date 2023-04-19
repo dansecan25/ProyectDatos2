@@ -12,6 +12,7 @@
 #include <vector>
 #include <list>
 #include <stdexcept>
+#include "../Headers/Strategies.h"
 
 using namespace std;
 class GameScreen
@@ -23,7 +24,7 @@ private:
     void initObjects();
     void initVariables();
     void initKeybinds() override;
-
+    Strategies* strategyManager;
     void makePattern(int);
 
     EnemyList *enemyList = new EnemyList();
@@ -38,7 +39,7 @@ private:
     void initTextures();
     void initPlayer();
 public:
-    explicit GameScreen(sf::RenderWindow * window, LinkedListStructured* mapStructures, WindowStatesStack* states, int mode, ArduinoManagement* arduino);
+    explicit GameScreen(sf::RenderWindow * window, LinkedListStructured* mapStructures, WindowStatesStack* states, int mode, ArduinoManagement* arduino, Strategies* strategies);
     ~GameScreen() override;
     void updateInput(const float& dt) override;
     void stateUpdate(const float& dt) override;

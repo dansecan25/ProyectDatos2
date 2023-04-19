@@ -13,8 +13,9 @@
  * @param states gameStatesStack pointer
  * @param mode int
  */
-GameScreen::GameScreen(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states, int mode, ArduinoManagement* arduino)
+GameScreen::GameScreen(sf::RenderWindow* window, LinkedListStructured* mapStructures, WindowStatesStack* states, int mode, ArduinoManagement* arduino, Strategies* strategies)
 :WindowState(window, mapStructures,states, arduino){
+    this->strategyManager=strategies;
     this->initVariables();
     this->initObjects();
     this->initKeybinds();
@@ -24,24 +25,31 @@ GameScreen::GameScreen(sf::RenderWindow* window, LinkedListStructured* mapStruct
     this->mode = mode;
     makePattern(mode);
     createEnemyList(wave);
+    this->arduinoControls->sendWindowState("Game\n");
 }
 /**
  * @brief constructor to state GameScreen
  */
 GameScreen::~GameScreen() {
     delete player;
+    delete strategyManager;
 }
 /**
  * @brief updates the inputs events on the current state of the window
  * @param dt const float reference
  */
 void GameScreen::updateInput(const float &dt) {
-
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("Move_Up")))){
-        this->player->move(dt, 0,-2);
-    }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("Move_Down")))){
-        this->player->move(dt, 0,2);
+    static sf::Clock inputClock;
+    if (inputClock.getElapsedTime().asSeconds() > 0.2f) {
+        // Reset the clock
+        inputClock.restart();
+        std::string movementDirection = this->arduinoControls->getJoystickMovement();
+        if (movementDirection.find("up") != std::string::npos) {
+            this->player->move(dt, 0, -2);
+        }
+        if (movementDirection.find("down") != std::string::npos) {
+            this->player->move(dt, 0, -2);
+        }
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("kill_all")))){
         cout<<"killing enemies";
@@ -51,7 +59,20 @@ void GameScreen::updateInput(const float &dt) {
         }
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("Quit")))){
+        this->arduinoControls->sendWindowState("Game\n");
         this->endState();
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("Deathray")))){
+        this->strategyManager->checkIfLoaded("Deathray");
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("FlashStep")))){
+        this->strategyManager->checkIfLoaded("Flashstep");
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("Invincible")))){
+        this->strategyManager->checkIfLoaded("Invincible");
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("Fireball")))){
+        this->strategyManager->checkIfLoaded("Fireball");
     }
 }
 /**
@@ -65,6 +86,7 @@ void GameScreen::stateUpdate(const float& dt) {
 
     if (enemyList->lenEnemyList(enemyList->getHead()) == 0 && wave <= 5){
         this->wave = wave+1;
+        this->arduinoControls->sendWave(this->wave);
         createEnemyList(wave);
     }
 }
@@ -91,6 +113,10 @@ void GameScreen::initKeybinds() {
     this->keyBinds->insertNode("Move_Up",this->supportedKeys->getNode("W"));
     this->keyBinds->insertNode("Move_Down",this->supportedKeys->getNode("S"));
     this->keyBinds->insertNode("Quit",this->supportedKeys->getNode("Escape"));
+    this->keyBinds->insertNode("Deathray",this->supportedKeys->getNode("E"));
+    this->keyBinds->insertNode("FlashStep",this->supportedKeys->getNode("R"));
+    this->keyBinds->insertNode("Invincible",this->supportedKeys->getNode("T"));
+    this->keyBinds->insertNode("Fireball",this->supportedKeys->getNode("Y"));
 
     this->keyBinds->insertNode("kill_all",this->supportedKeys->getNode("K"));
 
