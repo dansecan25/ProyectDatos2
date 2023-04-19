@@ -3,9 +3,11 @@
 //
 
 #include "../Headers/GameScreen.h"
+#include "../Headers/GameOverScreen.h"
 #include <iostream>
 #include <list>
 #include <csignal>
+#include <thread>
 
 using namespace std;
 
@@ -26,8 +28,24 @@ GameScreen::GameScreen(sf::RenderWindow* window, LinkedListStructured* mapStruct
 
     this->mode = mode;
     makePattern(mode);
-    this->bulletRes = bulletNum;
     createEnemyList(wave);
+
+    bulletClock.restart().asSeconds();
+    enemyClock.restart().asSeconds();
+    /*
+    cout<<"sale";
+    while (true){
+        cout<<"shooting";
+        shooting();
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+    } */
+    }
+void GameScreen::shooting(){
+    cout<<"empieza";
+    sf::Vector2<float> pos = player->getPosition();
+    sf::Vector2u windowsize = window->getSize();
+    //bulletOriginal->getHead()->moveBullet(pos,windowsize);
+    cout<<"termina";
 }
 /**
  * @brief constructor to state GameScreen
@@ -48,7 +66,7 @@ void GameScreen::updateInput(const float &dt) {
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("kill_all")))){
         cout<<"killing enemies";
-        for (int i; enemyList->lenEnemyList(enemyList->getHead()) >= i; i++)
+        for (int i =0; enemyList->lenEnemyList(enemyList->getHead()) >= i; i++)
         {
             enemyList->deleteEnemy(i);
         }
@@ -80,6 +98,7 @@ void GameScreen::stateRender(sf::RenderTarget * target) {
         target=this->window;
     }
     this->player->renderEntity(target);
+
     if (mode == 3){
         for(size_t i=0;i<(level_sketch.length())-3;i++) {
             if(enemyList->findEnemy(i)->isAlive()) {
@@ -93,18 +112,53 @@ void GameScreen::stateRender(sf::RenderTarget * target) {
             }
         }
     }
-    //Shooting bullets
-    for (int i; i == bulletRes; i++){
-        sf::Vector2<float> pos = player->getPosition();
-        if (clock.getElapsedTime().asSeconds() >= 3.0f){
-            bulletcollector->findBullet(i)->draw(this->window);
-            bulletcollector->findBullet(i)->moveBullet(pos);
+    //enemy's movement
+    sf::Time ec = enemyClock.getElapsedTime();
+    std::srand(std::time(nullptr));
+    sf::Vector2<float> pos = player->getPosition();
 
+    if(ec.asSeconds() > speed)
+    {
+        int num_rand = (std::rand() % enemyList->lenEnemyList(enemyList->getHead()));
+        enemyList->findEnemy(num_rand)->getSprite().move(-50,0);
+        enemyClock.restart();
+
+        if (enemyList->findEnemy(num_rand)->getSprite().getPosition().x <= pos.x){
+            GameOver();
         }
     }
+    //Bullets shooting
+    sf::Vector2u windowsize = window->getSize();
+    sf::Time bc = bulletClock.getElapsedTime();
 
-}
+    sf::Vector2f bulletV = bulletOriginal->getHead()->getPosition();
+    bulletOriginal->getHead()->setPosition(50, pos.y);
+/*
+    while(bulletOriginal->getHead()->getPosition().x <= windowsize.x ){
 
+        if(bc.asSeconds() > 1.0) {
+            sf::Vector2f bulletV = bulletOriginal->getHead()->getPosition();
+            cout<<"\npos"<<bulletV.x<<"and"<<bulletV.y;
+
+            bulletOriginal->getHead()->getSprite().move(+0.01,0);
+            bulletOriginal->getHead()->draw(window);
+
+            bulletClock.restart();
+        }
+    }*/
+    /*
+    for(size_t i=0;i<=bulletBackup;i++) {
+        bulletOriginal->findBullet(i)->draw(this->window);
+        }
+    //Shooting bullets
+
+    sf::Vector2<float> pos = player->getPosition();
+    if (clock.getElapsedTime().asSeconds() == 1.0f){
+        cout<<"disparar";
+        sf::Vector2u windowsize = window->getSize();
+        bulletOriginal->getHead()->draw(this->window, pos, windowsize);
+        } */
+    }
 /**
  * @brief stores the accepted keys in the linked list
  */
@@ -113,7 +167,6 @@ void GameScreen::initKeybinds() {
     this->keyBinds->insertNode("Move_Down",this->supportedKeys->getNode("S"));
     this->keyBinds->insertNode("Quit",this->supportedKeys->getNode("Escape"));
     this->keyBinds->insertNode("kill_all",this->supportedKeys->getNode("K"));
-
 }
 /**
  * @brief Creates a list with enemies and their data
@@ -121,19 +174,19 @@ void GameScreen::initKeybinds() {
  */
 void GameScreen::createEnemyList(int s){
     this->level_sketch = patternArray->findEnemy(s)->getPattern();
+
     int i = 0;
     int xpos = 750;
     int ypos = 0;
     for (char sketch_character : level_sketch) {
         switch (sketch_character) {
             case '\n': {
-                cout<<"no pattern";
                 ypos = 0;
                 xpos = xpos + 50;
                 break;
             }
             case '0': {
-                EnemyShip *enemy = new EnemyShip(i, 100, sketch_character);
+                EnemyShip *enemy = new EnemyShip(i, sketch_character, resistance);
                 enemy->setLocation(xpos, ypos*100+50);
                 enemyList->insertEnemy(enemy);
                 i++;
@@ -141,7 +194,7 @@ void GameScreen::createEnemyList(int s){
                 break;
             }
             case '1': {
-                EnemyShip *enemy = new EnemyShip(i, 100, sketch_character);
+                EnemyShip *enemy = new EnemyShip(i, sketch_character,resistance + 10);
                 enemy->setLocation(xpos, ypos*100+50);
                 enemyList->insertEnemy(enemy);
                 i++;
@@ -149,7 +202,7 @@ void GameScreen::createEnemyList(int s){
                 break;
             }
             case '2': {
-                EnemyShip *enemy = new EnemyShip(i, 100, sketch_character);
+                EnemyShip *enemy = new EnemyShip(i, sketch_character, resistance + 25);
                 enemy->setLocation(xpos, ypos*100+50);
                 enemyList->insertEnemy(enemy);
                 i++;
@@ -159,9 +212,11 @@ void GameScreen::createEnemyList(int s){
         }}
     cout<<"Print the enemy list\n";
     enemyList->printList(enemyList->getHead());
+
     //Create bullet list
-    for (int i; i == bulletRes; i++){
-        bulletcollector->addBullet(i,50,10);
+    this->bulletBackup = bulletNum;
+    for (int i = 0; i <= bulletBackup; i++){
+        bulletOriginal->addBullet(i, 50);
     }
 }
 /**
@@ -197,13 +252,14 @@ void GameScreen::initPlayer() {
 /**
  * @brief Sets the pattern of enemies to be drawn
  * @param n int
- * @return level_sketch char
  */
 void GameScreen::makePattern(int n){ //pattern for showing enemies
     //Reference for enemy patterns https://github.com/Kofybrek/Space-invaders.git
     switch (n){
         case 1: {
-            this->bulletNum = 100;
+            this->bulletNum = 10;
+            this->resistance = 20;
+            this->speed = 3.0;
 
             EnemyShip *pattern1 = new EnemyShip(1);
             pattern1->setPattern("000000\n000000\n000000");
@@ -229,6 +285,8 @@ void GameScreen::makePattern(int n){ //pattern for showing enemies
         }
         case 2: {
             this->bulletNum = 150;
+            this->resistance = 35;
+            this->speed = 2.0;
 
             EnemyShip *pattern1 = new EnemyShip(1);
             pattern1->setPattern("001100\n000000\n101010");
@@ -254,6 +312,8 @@ void GameScreen::makePattern(int n){ //pattern for showing enemies
         }
         case 3: {
             this->bulletNum = 200;
+            this->resistance = 50;
+            this->speed = 1.0;
 
             EnemyShip *pattern1 = new EnemyShip(1);
             pattern1->setPattern("101010\n101010\n110011\n212121");
@@ -278,4 +338,8 @@ void GameScreen::makePattern(int n){ //pattern for showing enemies
             break;
         }
     }
+}
+void GameScreen::GameOver(){
+    this->states->push(new GameOverScreen(this->window, this->supportedKeys, this->states));
+
 }

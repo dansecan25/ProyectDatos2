@@ -39,10 +39,12 @@ Bullet* BulletCollector::getLast() {
 }
 /**
  * @brief Adds a new bullet to the collector
+ * @param id int
  * @param imp int
+ * @param sp float
  */
-void BulletCollector::addBullet (int id, int imp, float sp){
-    Bullet *n=new Bullet(id,imp,sp);
+void BulletCollector::addBullet (int id, int imp){
+    Bullet *n=new Bullet(id,imp);
     if (getHead() == NULL)
     {
         setHead(n);
@@ -59,7 +61,7 @@ void BulletCollector::addBullet (int id, int imp, float sp){
 void BulletCollector::printCollector(Bullet *n){
     if (n != NULL)
     {
-        cout << "We have: " << n->getImpact() <<endl;
+        cout << n->getId() <<endl;
         this->printCollector(n->getNext());
     }
 }
@@ -90,8 +92,9 @@ void BulletCollector::deleteBullet(int data){
  */
 Bullet* BulletCollector::findBullet(int data){
     Bullet *find =  getHead();
-    while((find != NULL) and (find->getImpact()!=data)){
+    while((find != NULL) and (find->getId()!=data)){
         find = find->getNext();
     }
     return find;
 }
+

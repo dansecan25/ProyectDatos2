@@ -3,7 +3,7 @@ project(ProyectDatos2)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(ProyectDatos2 main.cpp Source/GameControls.cpp Headers/GameControls.h
+add_executable(ProyectDatos2 main.cpp
         Source/GameScreen.cpp Headers/GameScreen.h
         Source/EnemyShip.cpp Headers/EnemyShip.h
         Source/Player.cpp Headers/Player.h
@@ -11,8 +11,6 @@ add_executable(ProyectDatos2 main.cpp Source/GameControls.cpp Headers/GameContro
         Source/SettingsScreen.cpp Headers/SettingsScreen.h
         Source/Powers.cpp Headers/Powers.h
         Source/Bullet.cpp Headers/Bullet.h
-        Source/GameMechanics.cpp Headers/GameMechanics.h
-        Source/Waves.cpp Headers/Waves.h
         Source/LInkedLIstFIlesSources/Node.cpp Headers/LInkedListFilesHeaders/Node.h
         Source/LInkedLIstFIlesSources/SimpleLinkedList.cpp Headers/LInkedListFilesHeaders/SimpleLinkedList.h
         Source/BulletCollector.cpp Headers/BulletCollector.h ImageLoader.cpp ImageLoader.h
@@ -23,5 +21,5 @@ add_executable(ProyectDatos2 main.cpp Source/GameControls.cpp Headers/GameContro
         Source/Entities.cpp Headers/Entities.h
         Source/LInkedLIstFIlesSources/LinkedListStructured.cpp Headers/LInkedListFilesHeaders/LinkedListStructured.h
         Source/LInkedLIstFIlesSources/LinkedListStructured.cpp Source/MainScreen.cpp
-        Headers/MainScreen.h Source/GameModeScreen.cpp Headers/GameModeScreen.h Source/EnemyManager.cpp Headers/EnemyManager.h Source/EnemyManager.cpp Source/EnemyList.cpp Headers/EnemyList.h)
+        Headers/MainScreen.h Source/GameModeScreen.cpp Headers/GameModeScreen.h Source/EnemyList.cpp Headers/EnemyList.h Source/GameOverScreen.cpp Headers/GameOverScreen.h)
 target_link_libraries(ProyectDatos2 sfml-graphics sfml-window sfml-system)

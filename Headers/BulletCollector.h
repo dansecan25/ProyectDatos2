@@ -14,7 +14,7 @@ public:
     Bullet * head;
     BulletCollector();
 
-    void addBullet(int id, int imp, float sp);
+    void addBullet(int id, int imp);
     void printCollector(Bullet *n);
     void setHead(Bullet *H);
 

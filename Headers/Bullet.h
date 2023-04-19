@@ -7,8 +7,7 @@
 
 
 #include <array>
-#include <SFML/Graphics/CircleShape.hpp>
-#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics.hpp>
 
 class Bullet {
     Bullet();
@@ -20,13 +19,10 @@ public:
     int impact;
     int id;
 
-    sf::CircleShape shape;
-    sf::Vector2f direction;
+    sf::Sprite sprite;
     sf::Texture texture;
 
-    float speed;
-
-    Bullet(int id,int imp,float sp);
+    Bullet(int id,int imp);
 
     Bullet *getNext();
     void editBullet(int imp);
@@ -35,9 +31,12 @@ public:
 
     //void* operator new(size_t size);
     //void operator delete(void*);
-    Bullet *moveBullet(sf::Vector2f pos);
+    void setPosition( float x, float y);
+    void draw(sf::RenderTarget * target);
 
-    void draw(sf::RenderTarget *target);
+    sf::Sprite &getSprite();
+    int getId();
+    sf::Vector2<float> getPosition();
 };
 
 #endif //PROYECTDATOS2_BULLET_H
