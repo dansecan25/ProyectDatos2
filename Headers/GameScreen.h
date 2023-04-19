@@ -38,7 +38,6 @@ private:
     int bulletBackup;
     int resistance;
     int speed;
-    const float time_within_bullets = 3.f;
 
     sf::Clock clock;
     sf::Clock bulletClock;
@@ -55,8 +54,6 @@ public:
     void stateUpdate(const float& dt) override;
     void stateRender(sf::RenderTarget * target) override;
 
-    void sleepgame();
-    void shooting();
     void GameOver();
 };
 

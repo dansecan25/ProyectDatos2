@@ -32,21 +32,7 @@ GameScreen::GameScreen(sf::RenderWindow* window, LinkedListStructured* mapStruct
 
     bulletClock.restart().asSeconds();
     enemyClock.restart().asSeconds();
-    /*
-    cout<<"sale";
-    while (true){
-        cout<<"shooting";
-        shooting();
-        std::this_thread::sleep_for(std::chrono::seconds(3));
-    } */
     }
-void GameScreen::shooting(){
-    cout<<"empieza";
-    sf::Vector2<float> pos = player->getPosition();
-    sf::Vector2u windowsize = window->getSize();
-    //bulletOriginal->getHead()->moveBullet(pos,windowsize);
-    cout<<"termina";
-}
 /**
  * @brief constructor to state GameScreen
  */
@@ -66,10 +52,10 @@ void GameScreen::updateInput(const float &dt) {
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("kill_all")))){
         cout<<"killing enemies";
-        for (int i =0; enemyList->lenEnemyList(enemyList->getHead()) >= i; i++)
-        {
-            enemyList->deleteEnemy(i);
-        }
+        delete enemyList;
+        EnemyList *enemyList = new EnemyList();
+        wave = wave + 1;
+        createEnemyList(wave);
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds->getNode("Quit")))){
         this->endState();
@@ -132,7 +118,6 @@ void GameScreen::stateRender(sf::RenderTarget * target) {
     sf::Time bc = bulletClock.getElapsedTime();
 
     sf::Vector2f bulletV = bulletOriginal->getHead()->getPosition();
-    bulletOriginal->getHead()->setPosition(50, pos.y);
 /*
     while(bulletOriginal->getHead()->getPosition().x <= windowsize.x ){
 
@@ -146,18 +131,17 @@ void GameScreen::stateRender(sf::RenderTarget * target) {
             bulletClock.restart();
         }
     }*/
-    /*
-    for(size_t i=0;i<=bulletBackup;i++) {
-        bulletOriginal->findBullet(i)->draw(this->window);
-        }
     //Shooting bullets
+    bulletOriginal->getHead()->setPosition(pos.x,pos.y);
 
-    sf::Vector2<float> pos = player->getPosition();
-    if (clock.getElapsedTime().asSeconds() == 1.0f){
-        cout<<"disparar";
-        sf::Vector2u windowsize = window->getSize();
-        bulletOriginal->getHead()->draw(this->window, pos, windowsize);
-        } */
+    if (bulletClock.getElapsedTime().asSeconds() >= 3.0f){
+        while (bulletOriginal->getHead()->getPosition().x <= windowsize.x){
+            cout<<"disparar";
+            bulletOriginal->getHead()->getSprite().move(+10,0);
+            bulletOriginal->getHead()->draw(this->window);
+            cout<<"\npos"<<bulletV.x<<"and"<<bulletV.y;
+        }
+        bulletClock.restart();}
     }
 /**
  * @brief stores the accepted keys in the linked list
